@@ -5,9 +5,6 @@
  */
 package cypis.modelAPI.ADTrees;
 
-import cypis.TreeNodeType;
-import cypis.TreeOperator;
-
 /**
  *
  * @author User
