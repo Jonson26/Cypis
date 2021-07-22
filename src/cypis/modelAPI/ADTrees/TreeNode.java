@@ -26,6 +26,7 @@ public class TreeNode {
         type = t;
         operator = o;
         label = l;
+        children = new ArrayList<>();
     }
     
     public TreeNode(){
