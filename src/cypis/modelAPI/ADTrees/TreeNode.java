@@ -7,7 +7,10 @@ package cypis.modelAPI.ADTrees;
 
 /**
  *
- * @author User
+ * @author Filip Jamroga
+ * 
+ * This class can be used to represent ADTool-style Attack-Defense Trees in-code.
+ * Note however, that loading and saving of ADTool files is not in the feature set of this class.
  */
 public class TreeNode {
     private TreeNodeType type;
@@ -15,7 +18,23 @@ public class TreeNode {
     private String label;
     private TreeNode[] children;
     private TreeNode countermeasure;
-
+    
+    //constructors
+    public TreeNode(TreeOperator o, TreeNodeType t, String l){
+        type = t;
+        operator = o;
+        label = l;
+    }
+    
+    public TreeNode(){
+        this(TreeOperator.OR, TreeNodeType.NODE, "default node");
+    }
+    
+    public void addChild(TreeNode c){
+        children[children.length] = c;
+    }
+    
+    //below are all the getsetters
     public TreeNodeType getType() {
         return type;
     }
