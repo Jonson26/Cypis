@@ -5,7 +5,10 @@
  */
 package cypis;
 
-import cypis.modelAPI.ADTrees.*;
+import cypis.modelAPI.ADTrees.TreeNode;
+import cypis.modelAPI.ADTrees.TreeOperator;
+import cypis.modelAPI.ADTrees.TreeNodeType;
+
 /**
  *
  * @author User
