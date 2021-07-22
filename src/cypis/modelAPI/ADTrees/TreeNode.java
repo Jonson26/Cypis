@@ -5,6 +5,8 @@
  */
 package cypis.modelAPI.ADTrees;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Filip Jamroga
@@ -16,7 +18,7 @@ public class TreeNode {
     private TreeNodeType type;
     private TreeOperator operator;
     private String label;
-    private TreeNode[] children;
+    private ArrayList<TreeNode> children;
     private TreeNode countermeasure;
     
     //constructors
@@ -31,7 +33,7 @@ public class TreeNode {
     }
     
     public void addChild(TreeNode c){
-        children[children.length] = c;
+        children.add(c);
     }
     
     //below are all the getsetters
@@ -59,11 +61,11 @@ public class TreeNode {
         this.label = label;
     }
 
-    public TreeNode[] getChildren() {
+    public ArrayList<TreeNode> getChildren() {
         return children;
     }
 
-    public void setChildren(TreeNode[] children) {
+    public void setChildren(ArrayList<TreeNode> children) {
         this.children = children;
     }
 
