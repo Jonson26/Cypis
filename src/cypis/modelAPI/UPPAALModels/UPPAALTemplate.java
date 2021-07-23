@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cypis.modelAPI.ADTrees;
+package cypis.modelAPI.UPPAALModels;
 
 /**
  *
  * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
  */
-public enum TreeNodeType {
-    NODE, COUNTERMEASURE;
+public class UPPAALTemplate {
+    
 }
