@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
+ * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  * 
  * This class can be used to represent ADTool-style Attack-Defense Trees in-code.
  * Note however, that loading and saving of ADTool files is not in the feature set of this class.

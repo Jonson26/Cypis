@@ -22,7 +22,7 @@ import cypis.modelAPI.ADTool.NodeType;
 
 /**
  *
- * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
+ * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Cypis {
 

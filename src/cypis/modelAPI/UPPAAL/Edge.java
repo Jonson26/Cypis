@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
+ * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Edge {
     private String source, target;

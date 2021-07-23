@@ -18,7 +18,7 @@ package cypis.modelAPI.UPPAAL;
 
 /**
  *
- * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
+ * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class State {
     private Label name, invariant;

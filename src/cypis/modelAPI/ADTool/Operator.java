@@ -18,7 +18,7 @@ package cypis.modelAPI.ADTool;
 
 /**
  *
- * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
+ * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public enum Operator {
     OR, AND;
