@@ -78,4 +78,8 @@ public class UPPAALEdge {
     public String getTarget() {
         return target;
     }
+    
+    public void addNail(UPPAALNail nail){
+        nails.add(nail);
+    }
 }
