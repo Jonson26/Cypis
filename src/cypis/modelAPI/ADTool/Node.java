@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cypis.modelAPI.ADTrees;
+package cypis.modelAPI.ADTool;
 
 import java.util.ArrayList;
 
@@ -25,43 +25,43 @@ import java.util.ArrayList;
  * This class can be used to represent ADTool-style Attack-Defense Trees in-code.
  * Note however, that loading and saving of ADTool files is not in the feature set of this class.
  */
-public class TreeNode {
-    private TreeNodeType type;
-    private TreeOperator operator;
+public class Node {
+    private NodeType type;
+    private Operator operator;
     private String label;
-    private ArrayList<TreeNode> children;
-    private TreeNode countermeasure;
+    private ArrayList<Node> children;
+    private Node countermeasure;
     
     //constructors
-    public TreeNode(TreeOperator o, TreeNodeType t, String l){
+    public Node(Operator o, NodeType t, String l){
         type = t;
         operator = o;
         label = l;
         children = new ArrayList<>();
     }
     
-    public TreeNode(){
-        this(TreeOperator.OR, TreeNodeType.NODE, "default node");
+    public Node(){
+        this(Operator.OR, NodeType.NODE, "default node");
     }
     
-    public void addChild(TreeNode c){
+    public void addChild(Node c){
         children.add(c);
     }
     
     //below are all the getsetters
-    public TreeNodeType getType() {
+    public NodeType getType() {
         return type;
     }
 
-    public void setType(TreeNodeType type) {
+    public void setType(NodeType type) {
         this.type = type;
     }
 
-    public TreeOperator getOperator() {
+    public Operator getOperator() {
         return operator;
     }
 
-    public void setOperator(TreeOperator operator) {
+    public void setOperator(Operator operator) {
         this.operator = operator;
     }
 
@@ -73,19 +73,19 @@ public class TreeNode {
         this.label = label;
     }
 
-    public ArrayList<TreeNode> getChildren() {
+    public ArrayList<Node> getChildren() {
         return children;
     }
 
-    public void setChildren(ArrayList<TreeNode> children) {
+    public void setChildren(ArrayList<Node> children) {
         this.children = children;
     }
 
-    public TreeNode getCountermeasure() {
+    public Node getCountermeasure() {
         return countermeasure;
     }
 
-    public void setCountermeasure(TreeNode countermeasure) {
+    public void setCountermeasure(Node countermeasure) {
         this.countermeasure = countermeasure;
     }
 }

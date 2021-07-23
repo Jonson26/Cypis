@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cypis.modelAPI.UPPAALModels;
+package cypis.modelAPI.UPPAAL;
 
 import java.util.ArrayList;
 
@@ -22,12 +22,12 @@ import java.util.ArrayList;
  *
  * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
  */
-public class UPPAALEdge {
+public class Edge {
     private String source, target;
-    private UPPAALLabel select, guard;
-    private ArrayList<UPPAALNail> nails;
+    private Label select, guard;
+    private ArrayList<Nail> nails;
 
-    public UPPAALEdge(String source, String target, UPPAALLabel select, UPPAALLabel guard, ArrayList<UPPAALNail> nails) {
+    public Edge(String source, String target, Label select, Label guard, ArrayList<Nail> nails) {
         this.source = source;
         this.target = target;
         this.select = select;
@@ -35,39 +35,39 @@ public class UPPAALEdge {
         this.nails = nails;
     }
     
-    public UPPAALEdge(UPPAALState source, UPPAALState target, UPPAALLabel select, UPPAALLabel guard, ArrayList<UPPAALNail> nails) {
+    public Edge(State source, State target, Label select, Label guard, ArrayList<Nail> nails) {
         this(source.getName().getContent(), target.getName().getContent(), select, guard, nails);
     }
     
-    public UPPAALEdge(String source, String target, UPPAALLabel select, UPPAALLabel guard) {
+    public Edge(String source, String target, Label select, Label guard) {
         this(source, target, select, guard, new ArrayList<>());
     }
     
-    public UPPAALEdge(UPPAALState source, UPPAALState target, UPPAALLabel select, UPPAALLabel guard) {
+    public Edge(State source, State target, Label select, Label guard) {
         this(source.getName().getContent(), target.getName().getContent(), select, guard, new ArrayList<>());
     }
 
-    public UPPAALLabel getSelect() {
+    public Label getSelect() {
         return select;
     }
 
-    public void setSelect(UPPAALLabel select) {
+    public void setSelect(Label select) {
         this.select = select;
     }
 
-    public UPPAALLabel getGuard() {
+    public Label getGuard() {
         return guard;
     }
 
-    public void setGuard(UPPAALLabel guard) {
+    public void setGuard(Label guard) {
         this.guard = guard;
     }
 
-    public ArrayList<UPPAALNail> getNails() {
+    public ArrayList<Nail> getNails() {
         return nails;
     }
 
-    public void setNails(ArrayList<UPPAALNail> nails) {
+    public void setNails(ArrayList<Nail> nails) {
         this.nails = nails;
     }
 
@@ -79,7 +79,7 @@ public class UPPAALEdge {
         return target;
     }
     
-    public void addNail(UPPAALNail nail){
+    public void addNail(Nail nail){
         nails.add(nail);
     }
 }

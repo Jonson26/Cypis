@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cypis.modelAPI.UPPAALModels;
+package cypis.modelAPI.UPPAAL;
 
 /**
  *
  * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
  */
-public class UPPAALTemplate {
+public class Model {
     
 }

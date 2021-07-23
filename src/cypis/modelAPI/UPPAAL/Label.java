@@ -14,12 +14,49 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cypis.modelAPI.ADTrees;
+package cypis.modelAPI.UPPAAL;
 
 /**
  *
  * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
  */
-public enum TreeNodeType {
-    NODE, COUNTERMEASURE;
+public class Label {
+    private int x, y;
+    private String content;
+
+    public Label(int x, int y, String content) {
+        this.x = x;
+        this.y = y;
+        this.content = content;
+    }
+
+    public Label() {
+        this(0, 0, "default name");
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+    
+    
 }

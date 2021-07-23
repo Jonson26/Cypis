@@ -16,9 +16,9 @@
  */
 package cypis;
 
-import cypis.modelAPI.ADTrees.TreeNode;
-import cypis.modelAPI.ADTrees.TreeOperator;
-import cypis.modelAPI.ADTrees.TreeNodeType;
+import cypis.modelAPI.ADTool.Node;
+import cypis.modelAPI.ADTool.Operator;
+import cypis.modelAPI.ADTool.NodeType;
 
 /**
  *
@@ -34,10 +34,10 @@ public class Cypis {
     }
     
     public static void createTestTree(){//creates a test Attack-Defense Tree
-        TreeNode tree = new TreeNode(TreeOperator.OR, TreeNodeType.NODE, "A<> NOT punished");//create root node
+        Node tree = new Node(Operator.OR, NodeType.NODE, "A<> NOT punished");//create root node
         
-        tree.addChild(new TreeNode(TreeOperator.OR, TreeNodeType.NODE, "when in received_ballot_coerced do notify_authority"));//create and register first child node
+        tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in received_ballot_coerced do notify_authority"));//create and register first child node
         
-        tree.addChild(new TreeNode(TreeOperator.OR, TreeNodeType.NODE, "when in received_fake_tracker do say_lie"));//create and register second child node
+        tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in received_fake_tracker do say_lie"));//create and register second child node
     }
 }

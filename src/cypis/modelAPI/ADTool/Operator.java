@@ -14,33 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cypis.modelAPI.UPPAALModels;
+package cypis.modelAPI.ADTool;
 
 /**
  *
  * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
  */
-public class UPPAALNail {
-    private int x, y;
-    
-    public UPPAALNail(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-    public UPPAALNail(){
-        this(0, 0);
-    }
-
-    public int getX() {
-        return x;
-    }
-    public void setX(int x) {
-        this.x = x;
-    }
-    public int getY() {
-        return y;
-    }
-    public void setY(int y) {
-        this.y = y;
-    }
+public enum Operator {
+    OR, AND;
 }

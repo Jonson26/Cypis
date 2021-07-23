@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cypis.modelAPI.UPPAALModels;
+package cypis.modelAPI.UPPAAL;
 
 /**
  *
  * @author Filip Jamroga <filip.jamroga.001 at student.uni.lu>
  */
-public class UPPAALState {
-    private UPPAALLabel name, invariant;
+public class State {
+    private Label name, invariant;
     String comment, id;
     boolean initial, urgent, committed;
     int x, y;
 
-    public UPPAALState(UPPAALLabel name, UPPAALLabel invariant, String comment, String id, boolean initial, boolean urgent, boolean committed, int x, int y) {
+    public State(Label name, Label invariant, String comment, String id, boolean initial, boolean urgent, boolean committed, int x, int y) {
         this.name = name;
         this.invariant = invariant;
         this.comment = comment;
@@ -38,23 +38,23 @@ public class UPPAALState {
         this.y = y;
     }
 
-    public UPPAALState(UPPAALLabel name, String id, int x, int y) {
+    public State(Label name, String id, int x, int y) {
         this(name, null, null, id, false, false, false, x, y);
     }
 
-    public UPPAALLabel getName() {
+    public Label getName() {
         return name;
     }
 
-    public void setName(UPPAALLabel name) {
+    public void setName(Label name) {
         this.name = name;
     }
 
-    public UPPAALLabel getInvariant() {
+    public Label getInvariant() {
         return invariant;
     }
 
-    public void setInvariant(UPPAALLabel invariant) {
+    public void setInvariant(Label invariant) {
         this.invariant = invariant;
     }
 
