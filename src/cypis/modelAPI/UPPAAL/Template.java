@@ -26,4 +26,78 @@ public class Template {
     private String declaration;
     private ArrayList<State> states;
     private ArrayList<Edge> edges;
+
+    public Template(String declaration, ArrayList<State> states, ArrayList<Edge> edges) {
+        this.declaration = declaration;
+        this.states = states;
+        this.edges = edges;
+    }
+
+    public Template() {
+        this("", new ArrayList<>(), new ArrayList<>());
+    }
+
+    public String getDeclaration() {
+        return declaration;
+    }
+
+    public void setDeclaration(String declaration) {
+        this.declaration = declaration;
+    }
+
+    public ArrayList<State> getStates() {
+        return states;
+    }
+
+    public void setStates(ArrayList<State> states) {
+        this.states = states;
+    }
+
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+
+    public void setEdges(ArrayList<Edge> edges) {
+        this.edges = edges;
+    }
+    
+    public void addState(State s){
+        states.add(s);
+    }
+    
+    public State getState(int i){
+        return states.get(i);
+    }
+    
+    public State getState(String id){
+        return states.get(findStateById(id));
+    }
+    
+    public Edge getEdge(int i){
+        return edges.get(i);
+    }
+    
+    public void addEdge(Edge e){
+        edges.add(e);
+    }
+    
+    public int findStateById(String id){//returns -1 if element cannot be found
+        int i;
+        for(i=0; !states.get(i).getId().equals(id) && states.size()!=i; i++){
+        }
+        if(states.size()==i){
+            return -1;
+        }
+        return i;
+    }
+    
+    public int findStateByName(String name){//returns -1 if element cannot be found; only returns first instance found
+        int i;
+        for(i=0; !states.get(i).getName().equals(name) && states.size()!=i; i++){
+        }
+        if(states.size()==i){
+            return -1;
+        }
+        return i;
+    }
 }
