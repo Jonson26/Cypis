@@ -23,18 +23,19 @@ import java.util.ArrayList;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Template {
-    private String declaration;
+    private String name, declaration;
     private ArrayList<State> states;
     private ArrayList<Edge> edges;
 
-    public Template(String declaration, ArrayList<State> states, ArrayList<Edge> edges) {
+    public Template(String name, String declaration, ArrayList<State> states, ArrayList<Edge> edges) {
+        this.name = name;
         this.declaration = declaration;
         this.states = states;
         this.edges = edges;
     }
 
     public Template() {
-        this("", new ArrayList<>(), new ArrayList<>());
+        this("default name", "", new ArrayList<>(), new ArrayList<>());
     }
 
     public String getDeclaration() {
