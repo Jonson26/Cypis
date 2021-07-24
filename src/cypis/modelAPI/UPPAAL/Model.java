@@ -16,10 +16,61 @@
  */
 package cypis.modelAPI.UPPAAL;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Model {
+    private String declaration, systemDeclaration;
+    private ArrayList<Template> templates;
+
+    public Model(String declaration, String systemDeclaration, ArrayList<Template> templates) {
+        this.declaration = declaration;
+        this.systemDeclaration = systemDeclaration;
+        this.templates = templates;
+    }
+
+    public Model() {
+        this("", "", new ArrayList<>());
+    }
+
+    public String getDeclaration() {
+        return declaration;
+    }
+
+    public void setDeclaration(String declaration) {
+        this.declaration = declaration;
+    }
+
+    public String getSystemDeclaration() {
+        return systemDeclaration;
+    }
+
+    public void setSystemDeclaration(String systemDeclaration) {
+        this.systemDeclaration = systemDeclaration;
+    }
+
+    public ArrayList<Template> getTemplates() {
+        return templates;
+    }
+
+    public void setTemplates(ArrayList<Template> templates) {
+        this.templates = templates;
+    }
     
+    public void addTemplate(Template t){
+        templates.add(t);
+    }
+    
+    public Template getTemplate(String name){//returns first instance found; avoid duplicate names!
+        int i;
+        for(i=0; !templates.get(i).getName().equals(name) && templates.size()!=i; i++){
+        }
+        if(templates.size()==i){
+            return null;
+        }
+        return templates.get(i);
+    }
 }

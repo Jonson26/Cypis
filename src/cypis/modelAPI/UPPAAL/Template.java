@@ -81,6 +81,14 @@ public class Template {
     public void addEdge(Edge e){
         edges.add(e);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     
     public int findStateById(String id){//returns -1 if element cannot be found
         int i;
