@@ -24,27 +24,29 @@ import java.util.ArrayList;
  */
 public class Edge {
     private String source, target;
-    private Label select, guard;
+    private Label select, guard, sync, update;
     private ArrayList<Nail> nails;
 
-    public Edge(String source, String target, Label select, Label guard, ArrayList<Nail> nails) {
+    public Edge(String source, String target, Label select, Label guard, Label sync, Label update, ArrayList<Nail> nails) {
         this.source = source;
         this.target = target;
         this.select = select;
         this.guard = guard;
+        this.sync = sync;
+        this.update = update;
         this.nails = nails;
     }
     
-    public Edge(State source, State target, Label select, Label guard, ArrayList<Nail> nails) {
-        this(source.getName().getContent(), target.getName().getContent(), select, guard, nails);
+    public Edge(State source, State target, Label select, Label guard, Label sync, Label update, ArrayList<Nail> nails) {
+        this(source.getName().getContent(), target.getName().getContent(), select, guard, sync, update, nails);
     }
     
-    public Edge(String source, String target, Label select, Label guard) {
-        this(source, target, select, guard, new ArrayList<>());
+    public Edge(String source, String target, Label select, Label guard, Label sync, Label update) {
+        this(source, target, select, guard, sync, update, new ArrayList<>());
     }
     
-    public Edge(State source, State target, Label select, Label guard) {
-        this(source.getName().getContent(), target.getName().getContent(), select, guard, new ArrayList<>());
+    public Edge(State source, State target, Label select, Label guard,  Label sync, Label update) {
+        this(source.getName().getContent(), target.getName().getContent(), select, guard, sync, update, new ArrayList<>());
     }
 
     public Label getSelect() {
