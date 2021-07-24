@@ -19,6 +19,11 @@ package cypis;
 import cypis.modelAPI.ADTool.Node;
 import cypis.modelAPI.ADTool.Operator;
 import cypis.modelAPI.ADTool.NodeType;
+import cypis.modelAPI.UPPAAL.Edge;
+import cypis.modelAPI.UPPAAL.Label;
+import cypis.modelAPI.UPPAAL.Model;
+import cypis.modelAPI.UPPAAL.State;
+import cypis.modelAPI.UPPAAL.Template;
 
 /**
  *
@@ -31,6 +36,7 @@ public class Cypis {
      */
     public static void main(String[] args) {
         createTestTree();
+        createTestModel();
     }
     
     public static void createTestTree(){//creates a test Attack-Defense Tree
@@ -39,5 +45,78 @@ public class Cypis {
         tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in received_ballot_coerced do notify_authority"));//create and register first child node
         
         tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in received_fake_tracker do say_lie"));//create and register second child node
+    }
+    
+    public static void createTestModel(){
+        Model m = new Model();//create main model object
+        m.setDeclaration("// Place global declarations here.");
+        m.setSystemDeclaration(
+                "// Place template instantiations here.\n" +
+                "Process = Template();\n" +
+                "\n" +
+                "// List one or more processes to be composed into a system.\n" +
+                "system Process;");
+        
+        Template t = new Template();
+        t.setName("Template");
+        t.setDeclaration(
+                "//Actions START\n" +
+                "const bool go_a = true;\n" +
+                "const bool go_b = true;\n" +
+                "//Actions STOP");
+        
+        t.addState(new State( //add state "b"
+                new Label(88, 56, "b"), //name
+                null, //invariant
+                "", //comment
+                "id0", //id
+                false, //initial
+                false, //urgent
+                false, //committed
+                80, //x
+                80 //y
+        ));
+        
+        t.addState(new State( //add state "a"
+                new Label(-72, 56, "a"), //name
+                null, //invariant
+                "", //comment
+                "id1", //id
+                false, //initial
+                false, //urgent
+                false, //committed
+                -48, //x
+                80 //y
+        ));
+        
+        t.addState(new State( //add state "start"
+                new Label(0, -72, "start"), //name
+                null, //invariant
+                "", //comment
+                "id2", //id
+                true, //initial
+                false, //urgent
+                false, //committed
+                16, //x
+                -40 //y
+        ));
+        
+        t.addEdge(new Edge(
+                "id2", //source "start
+                "id0", //target "b"
+                null, //select
+                new Label(48, 0, "go_b"), //guard
+                null, //sync
+                null //update
+        ));
+        
+        t.addEdge(new Edge(
+                "id2", //source "start
+                "id1", //target "a"
+                null, //select
+                new Label(-48, 0, "go_a"), //guard
+                null, //sync
+                null //update
+        ));
     }
 }
