@@ -19,6 +19,7 @@ package cypis;
 import cypis.modelAPI.ADTool.Node;
 import cypis.modelAPI.ADTool.Operator;
 import cypis.modelAPI.ADTool.NodeType;
+import cypis.modelAPI.Strategy.ActionParser;
 import cypis.modelAPI.UPPAAL.Edge;
 import cypis.modelAPI.UPPAAL.Label;
 import cypis.modelAPI.UPPAAL.Model;
@@ -36,6 +37,7 @@ public class Cypis {
      */
     public static void main(String[] args) {
         createTestTree();
+        createTestTree2();
         createTestModel();
     }
     
@@ -45,6 +47,12 @@ public class Cypis {
         tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in received_ballot_coerced do notify_authority"));//create and register first child node
         
         tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in received_fake_tracker do say_lie"));//create and register second child node
+    }
+    
+    public static void createTestTree2(){//creates a test Attack-Defense Tree
+        Node tree = new Node(Operator.OR, NodeType.NODE, "A<> a");//create root node
+        
+        tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in start do go_a"));//create and register first child node
     }
     
     public static void createTestModel(){
