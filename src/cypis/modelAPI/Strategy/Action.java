@@ -38,6 +38,7 @@ public class Action {
     }
     
     public boolean checkEdge(Edge e){
-        return true;
+        String g = e.getGuard().getContent().split("&&")[0].replaceAll("\\s+","");
+        return g.equals(name);
     }
 }
