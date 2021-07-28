@@ -19,6 +19,7 @@ package cypis.modelAPI.Strategy;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,6 +45,9 @@ public class ActionParser {
         }catch(Exception ex){
             ex.printStackTrace();
         }
+        
+        actions.removeAll(Collections.singleton(null));
+        
         return actions;
     }
     

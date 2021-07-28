@@ -19,6 +19,7 @@ package cypis;
 import cypis.modelAPI.ADTool.Node;
 import cypis.modelAPI.ADTool.Operator;
 import cypis.modelAPI.ADTool.NodeType;
+import cypis.modelAPI.Strategy.ActionParser;
 import cypis.modelAPI.Strategy.TemplateReductor;
 import cypis.modelAPI.UPPAAL.Edge;
 import cypis.modelAPI.UPPAAL.Label;
@@ -26,6 +27,8 @@ import cypis.modelAPI.UPPAAL.Model;
 import cypis.modelAPI.UPPAAL.State;
 import cypis.modelAPI.UPPAAL.Template;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -136,6 +139,8 @@ public class Cypis {
                 null, //sync
                 null //update
         ));
+        
+        m.addTemplate(t);
         
         return m;
     }

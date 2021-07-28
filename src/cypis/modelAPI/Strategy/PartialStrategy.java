@@ -44,10 +44,12 @@ public class PartialStrategy {
     }
     
     private void parsePartialStrategyDefinitionString(String s){
-        Pattern pattern = Pattern.compile("when in(.*?)");
-        Matcher matcher = pattern.matcher(s);
-        if (matcher.find()){
-            s = matcher.group(1);
+        if(s.length()<7){
+            return;
+        }
+        String t = s.substring(0, 7);
+        if (t.equals("when in")){
+            s = s.substring(7);
         }else{
             action = null;
             state = null;
