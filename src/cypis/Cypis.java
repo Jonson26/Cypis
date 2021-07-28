@@ -19,12 +19,13 @@ package cypis;
 import cypis.modelAPI.ADTool.Node;
 import cypis.modelAPI.ADTool.Operator;
 import cypis.modelAPI.ADTool.NodeType;
-import cypis.modelAPI.Strategy.ActionParser;
+import cypis.modelAPI.Strategy.TemplateReductor;
 import cypis.modelAPI.UPPAAL.Edge;
 import cypis.modelAPI.UPPAAL.Label;
 import cypis.modelAPI.UPPAAL.Model;
 import cypis.modelAPI.UPPAAL.State;
 import cypis.modelAPI.UPPAAL.Template;
+import java.util.ArrayList;
 
 /**
  *
@@ -37,8 +38,15 @@ public class Cypis {
      */
     public static void main(String[] args) {
         createTestTree();
-        createTestTree2();
-        createTestModel();
+        Node t = createTestTree2();
+        Model m = createTestModel();
+        
+        ArrayList<Template> templates = new ArrayList<>();
+        TemplateReductor tr = new TemplateReductor();
+        templates.add(tr.reduce(m.getTemplates().get(0), t));
+        
+        Model m2 = new Model(m);
+        m2.setTemplates(templates);
     }
     
     public static void createTestTree(){//creates a test Attack-Defense Tree
@@ -49,13 +57,15 @@ public class Cypis {
         tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in received_fake_tracker do say_lie"));//create and register second child node
     }
     
-    public static void createTestTree2(){//creates a test Attack-Defense Tree related to the test UPPAAL model
+    public static Node createTestTree2(){//creates a test Attack-Defense Tree related to the test UPPAAL model
         Node tree = new Node(Operator.OR, NodeType.NODE, "A<> a");//create root node
         
         tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in start do go_a"));//create and register child node
+        
+        return tree;
     }
     
-    public static void createTestModel(){//creates a test UPPAAL model
+    public static Model createTestModel(){//creates a test UPPAAL model
         Model m = new Model();//create main model object
         m.setDeclaration("// Place global declarations here.");
         m.setSystemDeclaration(
@@ -126,5 +136,7 @@ public class Cypis {
                 null, //sync
                 null //update
         ));
+        
+        return m;
     }
 }
