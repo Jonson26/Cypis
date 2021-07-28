@@ -49,13 +49,13 @@ public class Cypis {
         tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in received_fake_tracker do say_lie"));//create and register second child node
     }
     
-    public static void createTestTree2(){//creates a test Attack-Defense Tree
+    public static void createTestTree2(){//creates a test Attack-Defense Tree related to the test UPPAAL model
         Node tree = new Node(Operator.OR, NodeType.NODE, "A<> a");//create root node
         
-        tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in start do go_a"));//create and register first child node
+        tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in start do go_a"));//create and register child node
     }
     
-    public static void createTestModel(){
+    public static void createTestModel(){//creates a test UPPAAL model
         Model m = new Model();//create main model object
         m.setDeclaration("// Place global declarations here.");
         m.setSystemDeclaration(
