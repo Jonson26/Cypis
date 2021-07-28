@@ -35,6 +35,12 @@ public class Model {
     public Model() {
         this("", "", new ArrayList<>());
     }
+    
+    public Model(Model m) {
+        this.declaration = m.getDeclaration()+"";
+        this.systemDeclaration = m.getSystemDeclaration()+"";
+        this.templates = (ArrayList<Template>) m.getTemplates().clone();
+    }
 
     public String getDeclaration() {
         return declaration;
