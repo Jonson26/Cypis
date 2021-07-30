@@ -23,19 +23,20 @@ import java.util.ArrayList;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Template {
-    private String name, declaration;
+    private String name, parameter, declaration;
     private ArrayList<State> states;
     private ArrayList<Edge> edges;
 
-    public Template(String name, String declaration, ArrayList<State> states, ArrayList<Edge> edges) {
+    public Template(String name, String parameter, String declaration, ArrayList<State> states, ArrayList<Edge> edges) {
         this.name = name;
+        this.parameter = parameter;
         this.declaration = declaration;
         this.states = states;
         this.edges = edges;
     }
 
     public Template() {
-        this("default name", "", new ArrayList<>(), new ArrayList<>());
+        this("default name", "", "", new ArrayList<>(), new ArrayList<>());
     }
 
     public String getDeclaration() {
@@ -88,6 +89,14 @@ public class Template {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getParameter() {
+        return parameter;
+    }
+
+    public void setParameter(String parameter) {
+        this.parameter = parameter;
     }
     
     public int findStateById(String id){//returns -1 if element cannot be found
