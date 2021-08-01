@@ -40,7 +40,7 @@ public class UPPAALWriter {
         buffer += "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"+
                   "<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_1.dtd'>";
         //open nta tag
-        buffer += "<nta>\n";
+        buffer += "\n\n<nta>\n";
         
         //write the declaration
         buffer += "<declaration>\n"+m.getDeclaration()+"\n</declaration>\n";
