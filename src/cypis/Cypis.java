@@ -26,6 +26,9 @@ import cypis.modelAPI.UPPAAL.Label;
 import cypis.modelAPI.UPPAAL.Model;
 import cypis.modelAPI.UPPAAL.State;
 import cypis.modelAPI.UPPAAL.Template;
+import cypis.modelAPI.fileIO.UPPAALWriter;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,6 +53,14 @@ public class Cypis {
         
         Model m2 = new Model(m);
         m2.setTemplates(templates);
+        
+        UPPAALWriter w = new UPPAALWriter();
+        File f = new File("test.xml");
+        try {
+            w.writeModel(m2, f);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     public static void createTestTree(){//creates a test Attack-Defense Tree
