@@ -105,7 +105,7 @@ public class UPPAALWriter {
             buffer += "<urgent/>\n";
         }
         
-        buffer += "/<loaction>\n";
+        buffer += "</location>\n";
         
         return buffer;
     }

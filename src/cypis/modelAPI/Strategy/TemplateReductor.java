@@ -43,7 +43,7 @@ public class TemplateReductor {
     }
     
     public Template reduce(Template t, Node n){
-        template = t;
+        template = new Template(t);
         attackTree = n;
         
         parsePartialStrategies(attackTree);//create a list of partial strategies

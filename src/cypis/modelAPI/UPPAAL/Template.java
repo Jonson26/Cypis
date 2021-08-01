@@ -34,6 +34,10 @@ public class Template {
         this.states = states;
         this.edges = edges;
     }
+    
+    public Template(Template t){
+        this(t.getName(), t.getParameter(), t.getDeclaration(), t.getStates(), t.getEdges());
+    }
 
     public Template() {
         this("default name", "", "", new ArrayList<>(), new ArrayList<>());
