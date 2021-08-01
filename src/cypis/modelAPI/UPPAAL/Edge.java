@@ -65,6 +65,24 @@ public class Edge {
         this.guard = guard;
     }
 
+    public Label getSync() {
+        return sync;
+    }
+
+    public void setSync(Label sync) {
+        this.sync = sync;
+    }
+
+    public Label getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(Label update) {
+        this.update = update;
+    }
+    
+    
+    
     public ArrayList<Nail> getNails() {
         return nails;
     }
