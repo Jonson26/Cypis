@@ -16,9 +16,6 @@
  */
 package cypis.modelAPI.Strategy;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  *
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
@@ -57,8 +54,8 @@ public class PartialStrategy {
             return;
         }
         String[] parts = s.split(" do ");
-        action = parts[0].replaceAll("\\s+","");
-        state = parts[1].replaceAll("\\s+","");
+        action = parts[1].replaceAll("\\s+","");
+        state = parts[0].replaceAll("\\s+","");
         valid = true;
     }
 }
