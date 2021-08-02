@@ -57,7 +57,7 @@ public class Cypis {
         UPPAALWriter w = new UPPAALWriter();
         File f = new File("test.xml");
         try {
-            w.writeModel(m, f);
+            w.writeModel(m2, f);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

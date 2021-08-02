@@ -126,12 +126,13 @@ public class TemplateReductor {
         boolean changed = false;
         
         for(int i=0; i<template.getStates().size(); i++){
-            State s = template.getState(i);
-            for(int j=0; j<edges.size(); j++){
-                if(s.isInitial()){//if state is initial, don't remove
+            State s = template.getStates().get(i);
+            if(s.isInitial()){//if state is initial, don't remove
                     states.add(s);
-                    break;
-                }else if(template.findStateById(edges.get(j).getSource())==i){//if an edge leading to the state in question has been found, don't remove
+                    continue;
+            }
+            for(int j=0; j<edges.size(); j++){
+                if(template.findStateById(edges.get(j).getSource())==i){//if an edge leading to the state in question has been found, don't remove
                     states.add(s);
                     break;//we only need to find one targeting edge to be sure that the state isn't orphaned
                 }else if(i+1<template.getStates().size()){//if we're at the end of the list of edges, and we still haven't found a targeting edge, drop state
