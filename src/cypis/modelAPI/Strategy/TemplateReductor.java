@@ -87,14 +87,18 @@ public class TemplateReductor {
     
     private void checkEdgeRedundancy(){
         ArrayList<Boolean> rt = new ArrayList();
-        for(int i=0; i<actionEdgeIndex.size(); i++){
+        actionEdgeIndex.forEach(_item -> {
             rt.add(Boolean.FALSE);
-        }
+        });
         
         for(int i=0; i<actionEdgeIndex.size(); i++){
             for(int j=0; j<strategy.size(); j++){
-                if(actionEdgeIndex.get(i).action.getName().equals(strategy.get(j).getAction()) &&
-                        template.getEdge(actionEdgeIndex.get(i).index).getSource().equals(strategy.get(j).getState())){
+                String s1 = actionEdgeIndex.get(i).action.getName();
+                String s2 = strategy.get(j).getAction();
+                String s3 = template.getEdge(actionEdgeIndex.get(i).index).getSource();
+                String s4 = strategy.get(j).getState();
+                String s5 = template.getState(template.findStateByName(s4)).getId();
+                if(s1.equals(s2) && s3.equals(s5)){
                     rt.set(i, Boolean.TRUE);
                 }
             }
