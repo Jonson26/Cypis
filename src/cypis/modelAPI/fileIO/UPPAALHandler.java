@@ -115,8 +115,8 @@ public class UPPAALHandler extends DefaultHandler{
                 elementValue = new StringBuilder();
                 if(attr.getLength()>0){
                     lastkind = attr.getValue("kind");
-                    name.setX(Integer.parseInt(attr.getValue("x")));
-                    name.setX(Integer.parseInt(attr.getValue("y")));
+                    label.setX(Integer.parseInt(attr.getValue("x")));
+                    label.setY(Integer.parseInt(attr.getValue("y")));
                 }
                 break;
             case NAIL:
