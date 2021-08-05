@@ -55,6 +55,8 @@ public class UPPAALWriter {
         //close nta tag
         buffer += "</nta>";
         
+        buffer = buffer.replaceAll("&", "&amp;");
+        
         //write buffer to file
         FileWriter fr = null;
         BufferedWriter br = null;
