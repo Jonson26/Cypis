@@ -80,6 +80,7 @@ public class TemplateReductor {
             for(int j=0; j<actions.size(); j++){
                 if(actions.get(j).checkEdge(edges.get(i))){
                     actionEdgeIndex.add(new EdgeDataContainer(i, actions.get(j)));
+                    j = actions.size();
                 }
             }
         }
