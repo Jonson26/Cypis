@@ -26,12 +26,19 @@ import cypis.modelAPI.UPPAAL.Label;
 import cypis.modelAPI.UPPAAL.Model;
 import cypis.modelAPI.UPPAAL.State;
 import cypis.modelAPI.UPPAAL.Template;
+import cypis.modelAPI.fileIO.TempXMLFilemaker;
+import cypis.modelAPI.fileIO.UPPAALHandler;
 import cypis.modelAPI.fileIO.UPPAALWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  *
@@ -46,6 +53,17 @@ public class Cypis {
         createTestTree();
         Node t = createTestTree2();
         Model m = createTestModel();
+        
+        try {
+            new TempXMLFilemaker().adaptUPPAALFile("cypisTest1.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            UPPAALHandler handler = new UPPAALHandler();
+            saxParser.parse("temp.xml", handler);
+            m = handler.getModel();
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            Logger.getLogger(Cypis.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         ArrayList<Template> templates = new ArrayList<>();
         TemplateReductor tr = new TemplateReductor();
