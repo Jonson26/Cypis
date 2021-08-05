@@ -104,13 +104,14 @@ public class Template {
     }
     
     public int findStateById(String id){//returns -1 if element cannot be found
-        int i;
-        for(i=0; !states.get(i).getId().equals(id) && states.size()!=i; i++){
-        }
-        if(states.size()==i){
-            return -1;
-        }
-        return i;
+//        int i;
+//        for(i=0; !states.get(i).getId().equals(id) && states.size()!=i; i++){
+//        }
+//        if(states.size()==i){
+//            return -1;
+//        }
+//        return i;
+        return states.indexOf(new State(null, id, 0, 0));
     }
     
     public int findStateByName(String name){//returns -1 if element cannot be found; only returns first instance found

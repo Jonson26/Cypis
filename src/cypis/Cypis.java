@@ -55,7 +55,7 @@ public class Cypis {
         Model m = createTestModel();
         
         try {
-            new TempXMLFilemaker().adaptUPPAALFile("cypisTest1.xml");
+            new TempXMLFilemaker().adaptUPPAALFile("selene_v7.xml");//"cypisTest1.xml");
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             UPPAALHandler handler = new UPPAALHandler();

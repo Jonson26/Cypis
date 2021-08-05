@@ -38,6 +38,9 @@ public class Action {
     }
     
     public boolean checkEdge(Edge e){
+        if(e.getGuard()==null){
+            return false;
+        }
         String g = e.getGuard().getContent().split("&&")[0].replaceAll("\\s+","");
         return g.equals(name);
     }

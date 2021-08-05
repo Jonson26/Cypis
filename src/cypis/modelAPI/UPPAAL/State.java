@@ -16,6 +16,8 @@
  */
 package cypis.modelAPI.UPPAAL;
 
+import java.util.Objects;
+
 /**
  *
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
@@ -109,4 +111,24 @@ public class State {
     public String getId() {// only getter for id - this value should not be changed under _any_ circumstances
         return id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final State other = (State) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
