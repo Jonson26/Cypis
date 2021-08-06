@@ -31,6 +31,7 @@ public class Node {
     private String label;
     private ArrayList<Node> children;
     private Node countermeasure;
+    public boolean switcher;
     
     //constructors
     public Node(Operator o, NodeType t, String l){
@@ -38,6 +39,7 @@ public class Node {
         operator = o;
         label = l;
         children = new ArrayList<>();
+        switcher = false;
     }
     
     public Node(){
