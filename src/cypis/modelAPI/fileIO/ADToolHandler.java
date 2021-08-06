@@ -49,6 +49,7 @@ public class ADToolHandler  extends DefaultHandler{
 
     @Override
     public void startDocument() throws SAXException {
+        mode = "node";
         tree = new Stack<>();
     }
 
@@ -63,12 +64,14 @@ public class ADToolHandler  extends DefaultHandler{
                     tree.peek().addChild(n);
                     tree.push(n);
                 }
-                if(attr.getValue("switchRole").equals("yes")){
-                    n.switcher = true;
-                    if(mode.equals("node")){
-                        mode = "countermeasure";
-                    }else if(mode.equals("countermeasure")){
-                        mode = "node";
+                if(attr.getLength()>1){
+                    if(attr.getValue("switchRole").equals("yes")){
+                        n.switcher = true;
+                        if(mode.equals("node")){
+                            mode = "countermeasure";
+                        }else if(mode.equals("countermeasure")){
+                            mode = "node";
+                        }
                     }
                 }
                 if(mode.equals("node")){

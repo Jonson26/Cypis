@@ -26,6 +26,7 @@ import cypis.modelAPI.UPPAAL.Label;
 import cypis.modelAPI.UPPAAL.Model;
 import cypis.modelAPI.UPPAAL.State;
 import cypis.modelAPI.UPPAAL.Template;
+import cypis.modelAPI.fileIO.EasyFileLoader;
 import cypis.modelAPI.fileIO.TempXMLFilemaker;
 import cypis.modelAPI.fileIO.UPPAALHandler;
 import cypis.modelAPI.fileIO.UPPAALWriter;
@@ -50,20 +51,24 @@ public class Cypis {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        createTestTree();
-        Node t = createTestTree2();
-        Model m = createTestModel();
+//        createTestTree();
+//        Node t = createTestTree2();
+//        Model m = createTestModel();
         
-        try {
-            new TempXMLFilemaker().adaptUPPAALFile("selene_v7.xml");//"cypisTest1.xml");
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser saxParser = factory.newSAXParser();
-            UPPAALHandler handler = new UPPAALHandler();
-            saxParser.parse("temp.xml", handler);
-            m = handler.getModel();
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
-            Logger.getLogger(Cypis.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            new TempXMLFilemaker().adaptUPPAALFile("selene_v7.xml");//"cypisTest1.xml");
+//            SAXParserFactory factory = SAXParserFactory.newInstance();
+//            SAXParser saxParser = factory.newSAXParser();
+//            UPPAALHandler handler = new UPPAALHandler();
+//            saxParser.parse("temp.xml", handler);
+//            m = handler.getModel();
+//        } catch (ParserConfigurationException | SAXException | IOException ex) {
+//            Logger.getLogger(Cypis.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+        EasyFileLoader fl = new EasyFileLoader();
+        Model m = fl.loadModel("selene_v7.xml");
+        Node t = fl.loadTree("Always_NOT_punished.xml");
         
         ArrayList<Template> templates = new ArrayList<>();
         TemplateReductor tr = new TemplateReductor();
@@ -73,7 +78,7 @@ public class Cypis {
         m2.setTemplates(templates);
         
         UPPAALWriter w = new UPPAALWriter();
-        File f = new File("test.xml");
+        File f = new File("cypisoutput.xml");
         try {
             w.writeModel(m2, f);
         } catch (IOException ex) {

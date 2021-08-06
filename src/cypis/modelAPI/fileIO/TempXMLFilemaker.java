@@ -33,7 +33,7 @@ public class TempXMLFilemaker {
         FileReader fr = new FileReader(filename);
         BufferedReader br = new BufferedReader(fr);
         
-        FileWriter fw = new FileWriter("./cypistemp/temp.xml");
+        FileWriter fw = new FileWriter("cypistemp.xml");
         BufferedWriter bw = new BufferedWriter(fw);
         
         String s = br.readLine();

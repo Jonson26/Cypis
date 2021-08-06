@@ -39,7 +39,7 @@ public class EasyFileLoader {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             UPPAALHandler handler = new UPPAALHandler();
-            saxParser.parse("./cypistemp/temp.xml", handler);
+            saxParser.parse("cypistemp.xml", handler);
             m = handler.getModel();
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(Cypis.class.getName()).log(Level.SEVERE, null, ex);
