@@ -100,7 +100,9 @@ public class UPPAALWriter {
         
         buffer += "<location id=\""+s.getId()+"\" x=\""+s.getX()+"\" y=\""+s.getY()+"\">\n";
         buffer += "<name x=\""+s.getName().getX()+"\" y=\""+s.getName().getY()+"\">"+s.getName().getContent()+"</name>\n";
-        buffer += "<label kind=\"invariant\" x=\""+s.getInvariant().getX()+"\" y=\""+s.getInvariant().getY()+"\">"+s.getInvariant().getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>";
+        if(s.getInvariant()!=null){
+            buffer += "<label kind=\"invariant\" x=\""+s.getInvariant().getX()+"\" y=\""+s.getInvariant().getY()+"\">"+s.getInvariant().getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>";
+        }
         
         if(s.isCommitted()){
             buffer += "<committed/>\n";
