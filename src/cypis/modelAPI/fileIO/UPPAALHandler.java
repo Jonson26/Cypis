@@ -182,6 +182,9 @@ public class UPPAALHandler extends DefaultHandler{
                     case "assignment":
                         edge.setUpdate(label);
                         break;
+                    case "invariant":
+                        state.setInvariant(label);
+                        break;
                 }
                 break;
             case SYSTEM:

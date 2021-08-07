@@ -100,6 +100,7 @@ public class UPPAALWriter {
         
         buffer += "<location id=\""+s.getId()+"\" x=\""+s.getX()+"\" y=\""+s.getY()+"\">\n";
         buffer += "<name x=\""+s.getName().getX()+"\" y=\""+s.getName().getY()+"\">"+s.getName().getContent()+"</name>\n";
+        buffer += "<label kind=\"invariant\" x=\""+s.getInvariant().getX()+"\" y=\""+s.getInvariant().getY()+"\">"+s.getInvariant().getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>";
         
         if(s.isCommitted()){
             buffer += "<committed/>\n";
@@ -122,22 +123,22 @@ public class UPPAALWriter {
         
         if(e.getSelect()!=null){
             Label l = e.getSelect();
-            buffer += "<label kind=\"select\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent()+"</label>\n";
+            buffer += "<label kind=\"select\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
         }
         if(e.getGuard()!=null){
             Label l = e.getGuard();
-            buffer += "<label kind=\"guard\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent()+"</label>\n";
+            buffer += "<label kind=\"guard\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
         }if(e.getSync()!=null){
             Label l = e.getSync();
-            buffer += "<label kind=\"synchronisation\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent()+"</label>\n";
+            buffer += "<label kind=\"synchronisation\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
         }
         if(e.getUpdate()!=null){
             Label l = e.getUpdate();
-            buffer += "<label kind=\"assignment\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent()+"</label>\n";
+            buffer += "<label kind=\"assignment\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
         }
         
         for(int i=0; i<e.getNails().size(); i++){
-            buffer += "<nail x=\""+e.getNails().get(i).getX()+"\" y=\""+e.getNails().get(i).getX()+"\"/>\n";
+            buffer += "<nail x=\""+e.getNails().get(i).getX()+"\" y=\""+e.getNails().get(i).getY()+"\"/>\n";
         }
         
         buffer += "</transition>\n";
