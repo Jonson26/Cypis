@@ -55,8 +55,6 @@ public class UPPAALWriter {
         //close nta tag
         buffer += "</nta>";
         
-        buffer = buffer.replaceAll("&", "&amp;");
-        
         //write buffer to file
         FileWriter fr = null;
         BufferedWriter br = null;
@@ -101,7 +99,7 @@ public class UPPAALWriter {
         buffer += "<location id=\""+s.getId()+"\" x=\""+s.getX()+"\" y=\""+s.getY()+"\">\n";
         buffer += "<name x=\""+s.getName().getX()+"\" y=\""+s.getName().getY()+"\">"+s.getName().getContent()+"</name>\n";
         if(s.getInvariant()!=null){
-            buffer += "<label kind=\"invariant\" x=\""+s.getInvariant().getX()+"\" y=\""+s.getInvariant().getY()+"\">"+s.getInvariant().getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>";
+            buffer += "<label kind=\"invariant\" x=\""+s.getInvariant().getX()+"\" y=\""+s.getInvariant().getY()+"\">"+s.getInvariant().getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>";
         }
         
         if(s.isCommitted()){
@@ -125,18 +123,18 @@ public class UPPAALWriter {
         
         if(e.getSelect()!=null){
             Label l = e.getSelect();
-            buffer += "<label kind=\"select\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
+            buffer += "<label kind=\"select\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
         }
         if(e.getGuard()!=null){
             Label l = e.getGuard();
-            buffer += "<label kind=\"guard\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
+            buffer += "<label kind=\"guard\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
         }if(e.getSync()!=null){
             Label l = e.getSync();
-            buffer += "<label kind=\"synchronisation\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
+            buffer += "<label kind=\"synchronisation\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
         }
         if(e.getUpdate()!=null){
             Label l = e.getUpdate();
-            buffer += "<label kind=\"assignment\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
+            buffer += "<label kind=\"assignment\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
         }
         
         for(int i=0; i<e.getNails().size(); i++){
