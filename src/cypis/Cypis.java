@@ -46,39 +46,28 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Cypis {
-
+    private static final String MODELFILE = "selene_v7.xml";
+    private static final String TREEFILE = "Always_NOT_punished.xml";
+    private static final String AGENTNAME = "Voter";
+    private static final String OUTFILE = "cypisoutput.xml";
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        createTestTree();
-//        Node t = createTestTree2();
-//        Model m = createTestModel();
+        EasyFileLoader fl = new EasyFileLoader();//load designated model files
+        Model m = fl.loadModel(MODELFILE);
+        Node t = fl.loadTree(TREEFILE);
         
-//        try {
-//            new TempXMLFilemaker().adaptUPPAALFile("selene_v7.xml");//"cypisTest1.xml");
-//            SAXParserFactory factory = SAXParserFactory.newInstance();
-//            SAXParser saxParser = factory.newSAXParser();
-//            UPPAALHandler handler = new UPPAALHandler();
-//            saxParser.parse("temp.xml", handler);
-//            m = handler.getModel();
-//        } catch (ParserConfigurationException | SAXException | IOException ex) {
-//            Logger.getLogger(Cypis.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        
-        EasyFileLoader fl = new EasyFileLoader();
-        Model m = fl.loadModel("selene_v7.xml");
-        Node t = fl.loadTree("Always_NOT_punished.xml");
-        
-        ArrayList<Template> templates = new ArrayList<>();
+        ArrayList<Template> templates = (ArrayList<Template>) m.getTemplates().clone();//find required template
+        int templateIndex = templates.indexOf(new Template(AGENTNAME, null, null, null, null));
         TemplateReductor tr = new TemplateReductor();
-        templates.add(tr.reduce(m.getTemplates().get(0), t));
         
+        templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), t));//reduce template, and replace the original
         Model m2 = new Model(m);
         m2.setTemplates(templates);
         
-        UPPAALWriter w = new UPPAALWriter();
-        File f = new File("cypisoutput.xml");
+        UPPAALWriter w = new UPPAALWriter();//write resulting model to file
+        File f = new File(OUTFILE);
         try {
             w.writeModel(m2, f);
         } catch (IOException ex) {
