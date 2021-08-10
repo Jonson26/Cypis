@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Cypis {
-    private static final String VERSION = "1.0.0";//bump manually
+    private static final String VERSION = "1.0.1";//bump manually
     
     private String modelFile = "";
     private String treeFile = "";
@@ -72,7 +72,8 @@ public class Cypis {
                 modelFile = args[0];
                 treeFile = args[1];
                 agentName = args[2];
-                if("-o".equals(args[3]) || "--output".equals(args[3])){
+                
+                if(args.length > 3 && ("-o".equals(args[3]) || "--output".equals(args[3]))){
                     if(args.length < 5){
                         System.out.println("Not enough arguments!");
                         printHelp();
