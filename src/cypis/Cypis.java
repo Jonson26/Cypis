@@ -19,7 +19,6 @@ package cypis;
 import cypis.modelAPI.ADTool.Node;
 import cypis.modelAPI.ADTool.Operator;
 import cypis.modelAPI.ADTool.NodeType;
-import cypis.modelAPI.Strategy.ActionParser;
 import cypis.modelAPI.Strategy.TemplateReductor;
 import cypis.modelAPI.UPPAAL.Edge;
 import cypis.modelAPI.UPPAAL.Label;
@@ -27,52 +26,95 @@ import cypis.modelAPI.UPPAAL.Model;
 import cypis.modelAPI.UPPAAL.State;
 import cypis.modelAPI.UPPAAL.Template;
 import cypis.modelAPI.fileIO.EasyFileLoader;
-import cypis.modelAPI.fileIO.TempXMLFilemaker;
-import cypis.modelAPI.fileIO.UPPAALHandler;
 import cypis.modelAPI.fileIO.UPPAALWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  *
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Cypis {
-    private static final String MODELFILE = "selene_v7.xml";
-    private static final String TREEFILE = "Always_NOT_punished.xml";
-    private static final String AGENTNAME = "Voter";
-    private static final String OUTFILE = "cypisoutput.xml";
+    private static final String VERSION = "0.9.1";//bump manually
+    
+    private String modelFile = "";
+    private String treeFile = "";
+    private String agentName = "";
+    private String outFile = "cypisoutput.xml";
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println("Cypis Model Reductor version " + VERSION);
+        System.out.println("(c) 2021 Filip Jamroga");
+        Cypis c = new Cypis();
+        c.processArgs(args);
+    }
+    
+    public void processArgs(String[] args){
+        if(args.length == 0){
+            System.out.println("Not enough arguments!");
+            printHelp();
+            return;
+        }
+        switch(args[0]){
+            case "-h":
+            case "--help":
+                printHelp();
+                break;
+            default:
+                if(args.length < 3){
+                    System.out.println("Not enough arguments!");
+                    printHelp();
+                    return;
+                }
+                modelFile = args[0];
+                treeFile = args[1];
+                agentName = args[2];
+                if("-o".equals(args[3]) || "--output".equals(args[3])){
+                    if(args.length < 5){
+                        System.out.println("Not enough arguments!");
+                        printHelp();
+                        return;
+                    }
+                    outFile = args[4];
+                }
+                reduceModel();
+                break;
+        }
+    }
+    
+    public void reduceModel(){
         EasyFileLoader fl = new EasyFileLoader();//load designated model files
-        Model m = fl.loadModel(MODELFILE);
-        Node t = fl.loadTree(TREEFILE);
+        System.out.println("Loading Model");
+        Model m = fl.loadModel(modelFile);
+        System.out.println("Loading Attack Tree");
+        Node t = fl.loadTree(treeFile);
         
+        
+        System.out.println("Selecting Agent");
         ArrayList<Template> templates = (ArrayList<Template>) m.getTemplates().clone();//find required template
-        int templateIndex = templates.indexOf(new Template(AGENTNAME, null, null, null, null));
+        int templateIndex = templates.indexOf(new Template(agentName, null, null, null, null));
         TemplateReductor tr = new TemplateReductor();
         
+        System.out.println("Reducing Agent");
         templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), t));//reduce template, and replace the original
         Model m2 = new Model(m);
         m2.setTemplates(templates);
         
+        System.out.println("Writing Output");
         UPPAALWriter w = new UPPAALWriter();//write resulting model to file
-        File f = new File(OUTFILE);
+        File f = new File(outFile);
         try {
             w.writeModel(m2, f);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        System.out.println("Finished!");
+    }
+    
+    public void printHelp(){
     }
     
     public static void createTestTree(){//creates a test Attack-Defense Tree
