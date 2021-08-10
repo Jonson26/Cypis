@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Cypis {
-    private static final String VERSION = "0.9.1";//bump manually
+    private static final String VERSION = "1.0.0";//bump manually
     
     private String modelFile = "";
     private String treeFile = "";
@@ -115,6 +115,12 @@ public class Cypis {
     }
     
     public void printHelp(){
+        String cmd = System.getProperties().getProperty("sun.java.command");
+        System.out.println(
+                "usage: java -jar "+cmd+" (-h | --help | modelfile treefile agentname [options])\n" +
+                "	options:\n" +
+                "		-h, --help              prints this message\n" +
+                "		-o, --output outfile	changes the output file's name");
     }
     
     public static void createTestTree(){//creates a test Attack-Defense Tree
