@@ -116,13 +116,19 @@ public class Template {
     }
     
     public int findStateByName(String name){//returns -1 if element cannot be found; only returns first instance found
-        int i;
-        for(i=0; !states.get(i).getName().getContent().equals(name) && states.size()!=i; i++){
-        }
-        if(states.size()==i){
-            return -1;
-        }
-        return i;
+        for(int i=0; i<states.size(); i++){//State s : states) {
+            if(states.get(i).getName().getContent().equals(name)){//carnet.getCodeIsIn().equals(codeIsIn)) {
+                    return i;
+                }
+            }
+        return -1;
+//        int i;
+//        for(i=0; !states.get(i).getName().getContent().equals(name) && states.size()!=i; i++){
+//        }
+//        if(states.size()==i){
+//            return -1;
+//        }
+//        return i;
     }
 
     @Override

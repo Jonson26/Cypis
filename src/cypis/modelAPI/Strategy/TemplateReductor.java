@@ -33,6 +33,7 @@ public class TemplateReductor {
     private ArrayList<PartialStrategy> strategy;
     private ArrayList<Action> actions;
     private ArrayList<EdgeDataContainer> actionEdgeIndex;
+    private ArrayList<String> relevantStateNames;
     private ArrayList<Integer> redundantEdgeIndex;
 
     public TemplateReductor() {
@@ -51,6 +52,7 @@ public class TemplateReductor {
         actions = new ActionParser().parse(template.getDeclaration());//create a list of all actions defined in template
         
         checkEdges();//create a list of all action edges
+        checkStateRelevance();
         checkEdgeRedundancy();//create a list of redundant edges
         removeRedundantEdges();
         
@@ -88,6 +90,18 @@ public class TemplateReductor {
         }
     }
     
+    private void checkStateRelevance(){
+        relevantStateNames = new ArrayList<>();
+        
+        for (PartialStrategy s : strategy) {
+            String name = s.getState();
+            int i = template.findStateByName(name);
+            if(i>=0){
+                relevantStateNames.add(template.getState(i).getName().getContent());
+            }
+        }
+    }
+    
     private void checkEdgeRedundancy(){
         ArrayList<Boolean> rt = new ArrayList();
         actionEdgeIndex.forEach(_item -> {
@@ -95,15 +109,19 @@ public class TemplateReductor {
         });
         
         for(int i=0; i<actionEdgeIndex.size(); i++){
-            for(int j=0; j<strategy.size(); j++){
-                String s1 = actionEdgeIndex.get(i).action.getName();
-                String s2 = strategy.get(j).getAction();
-                String s3 = template.getEdge(actionEdgeIndex.get(i).index).getSource();
-                String s4 = strategy.get(j).getState();
-                String s5 = template.getState(template.findStateByName(s4)).getId();
-                if(s1.equals(s2) && s3.equals(s5)){
-                    rt.set(i, Boolean.TRUE);
+            if(relevantStateNames.contains(actionEdgeIndex.get(i).action.getName())){
+                for(int j=0; j<strategy.size(); j++){
+                    String s1 = actionEdgeIndex.get(i).action.getName();
+                    String s2 = strategy.get(j).getAction();
+                    String s3 = template.getEdge(actionEdgeIndex.get(i).index).getSource();
+                    String s4 = strategy.get(j).getState();
+                    String s5 = template.getState(template.findStateByName(s4)).getId();
+                    if(s1.equals(s2) && s3.equals(s5)){
+                        rt.set(i, Boolean.TRUE);
+                    }
                 }
+            }else{
+                rt.set(i, Boolean.TRUE);
             }
         }
         
