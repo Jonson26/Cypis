@@ -6,7 +6,7 @@ This program takes an UPPAAL Model file along with a relevant strategy encoded i
 Command line usage:
 
 <pre>
-java -jar Cypis.jar selene_v7.xml Always_NOT_punished.xml (-h | --help | modelfile treefile agentname [options])
+java -jar Cypis.jar (-h | --help | modelfile treefile agentname [options])
 
   options:
   
