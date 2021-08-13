@@ -109,7 +109,8 @@ public class TemplateReductor {
         });
         
         for(int i=0; i<actionEdgeIndex.size(); i++){
-            if(relevantStateNames.contains(actionEdgeIndex.get(i).action.getName())){
+            String s0 = template.getState(template.getEdge(actionEdgeIndex.get(i).index).getSource()).getName().getContent();
+            if(relevantStateNames.contains(s0)){
                 for(int j=0; j<strategy.size(); j++){
                     String s1 = actionEdgeIndex.get(i).action.getName();
                     String s2 = strategy.get(j).getAction();
