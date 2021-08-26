@@ -28,7 +28,7 @@ import java.util.ArrayList;
  */
 public class TemplateReductor {
     private Template template;
-    private Node attackTree;
+//    private Node attackTree;
     
     private ArrayList<PartialStrategy> strategy;
     private ArrayList<Action> actions;
@@ -37,17 +37,18 @@ public class TemplateReductor {
     private ArrayList<Integer> redundantEdgeIndex;
 
     public TemplateReductor() {
-        strategy = new ArrayList<>();
+//        strategy = new ArrayList<>();
         actions = new ArrayList<>();
         actionEdgeIndex = new ArrayList<>();
         redundantEdgeIndex = new ArrayList<>();
     }
     
-    public Template reduce(Template t, Node n){
+    public Template reduce(Template t, Strategy s){
         template = new Template(t);
-        attackTree = n;
+//        attackTree = n;
         
-        parsePartialStrategies(attackTree);//create a list of partial strategies
+//        parsePartialStrategies(attackTree);//create a list of partial strategies
+        strategy = s.getStrat();
         
         actions = new ActionParser().parse(template.getDeclaration());//create a list of all actions defined in template
         
@@ -66,17 +67,17 @@ public class TemplateReductor {
         return template;
     }
     
-    private void parsePartialStrategies(Node n){
-        PartialStrategy p = new PartialStrategy(n.getLabel());//get the node n label and parse it
-        if(p.isValid()){//if the resulting partial strategy is valid, add it to the rest
-            strategy.add(p);
-        }
-        
-        ArrayList<Node> children = n.getChildren();
-        for(int i=0; i<children.size(); i++){//do the same for all the children of n
-            parsePartialStrategies(children.get(i));
-        }
-    }
+//    private void parsePartialStrategies(Node n){
+//        PartialStrategy p = new PartialStrategy(n.getLabel());//get the node n label and parse it
+//        if(p.isValid()){//if the resulting partial strategy is valid, add it to the rest
+//            strategy.add(p);
+//        }
+//        
+//        ArrayList<Node> children = n.getChildren();
+//        for(int i=0; i<children.size(); i++){//do the same for all the children of n
+//            parsePartialStrategies(children.get(i));
+//        }
+//    }
     
     private void checkEdges(){//check all edges if any of them have actions
         ArrayList<Edge> edges = template.getEdges();
