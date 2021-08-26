@@ -102,11 +102,12 @@ public class Cypis {
         templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s.get(0)));//reduce template, and replace the original
         
         if(s.size()>1){
-            System.out.println("Selecting "+s.get(0).getRelevantAgentName());
+            tr = new TemplateReductor();
+            System.out.println("Selecting "+s.get(1).getRelevantAgentName());
             templateIndex = templates.indexOf(new Template(s.get(1).getRelevantAgentName(), null, null, null, null));
 
-            System.out.println("Reducing "+s.get(0).getRelevantAgentName());
-            templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s.get(0)));//reduce template, and replace the original
+            System.out.println("Reducing "+s.get(1).getRelevantAgentName());
+            templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s.get(1)));//reduce template, and replace the original
         }
         
         Model m2 = new Model(m);

@@ -16,7 +16,6 @@
  */
 package cypis.modelAPI.Strategy;
 
-import cypis.modelAPI.ADTool.Node;
 import cypis.modelAPI.UPPAAL.Edge;
 import cypis.modelAPI.UPPAAL.State;
 import cypis.modelAPI.UPPAAL.Template;
@@ -113,13 +112,15 @@ public class TemplateReductor {
             String s0 = template.getState(template.getEdge(actionEdgeIndex.get(i).index).getSource()).getName().getContent();
             if(relevantStateNames.contains(s0)){
                 for(int j=0; j<strategy.size(); j++){
-                    String s1 = actionEdgeIndex.get(i).action.getName();
-                    String s2 = strategy.get(j).getAction();
-                    String s3 = template.getEdge(actionEdgeIndex.get(i).index).getSource();
-                    String s4 = strategy.get(j).getState();
-                    String s5 = template.getState(template.findStateByName(s4)).getId();
-                    if(s1.equals(s2) && s3.equals(s5)){
-                        rt.set(i, Boolean.TRUE);
+                    if(strategy.get(j).isValid()){
+                        String s1 = actionEdgeIndex.get(i).action.getName();
+                        String s2 = strategy.get(j).getAction();
+                        String s3 = template.getEdge(actionEdgeIndex.get(i).index).getSource();
+                        String s4 = strategy.get(j).getState();
+                        String s5 = template.getState(template.findStateByName(s4)).getId();
+                        if(s1.equals(s2) && s3.equals(s5)){
+                            rt.set(i, Boolean.TRUE);
+                        }
                     }
                 }
             }else{
