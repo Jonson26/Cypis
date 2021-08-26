@@ -17,15 +17,10 @@
 package cypis;
 
 import cypis.modelAPI.ADTool.Node;
-import cypis.modelAPI.ADTool.Operator;
-import cypis.modelAPI.ADTool.NodeType;
 import cypis.modelAPI.Strategy.Strategy;
 import cypis.modelAPI.Strategy.StrategyParser;
 import cypis.modelAPI.Strategy.TemplateReductor;
-import cypis.modelAPI.UPPAAL.Edge;
-import cypis.modelAPI.UPPAAL.Label;
 import cypis.modelAPI.UPPAAL.Model;
-import cypis.modelAPI.UPPAAL.State;
 import cypis.modelAPI.UPPAAL.Template;
 import cypis.modelAPI.fileIO.EasyFileLoader;
 import cypis.modelAPI.fileIO.UPPAALWriter;
@@ -117,7 +112,7 @@ public class Cypis {
         Model m2 = new Model(m);
         m2.setTemplates(templates);
         
-        System.out.println("Writing Output");
+        System.out.println("Writing Output to "+outFile);
         UPPAALWriter w = new UPPAALWriter();//write resulting model to file
         File f = new File(outFile);
         try {
