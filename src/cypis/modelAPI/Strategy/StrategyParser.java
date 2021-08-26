@@ -29,7 +29,7 @@ public class StrategyParser {
         String name1 = adt.getLabel();
         String name2 = null;
         if(adt.getChildren().size()>1){
-            name2 = adt.getCountermeasure().getLabel();
+            name2 = adt.getChildren().get(1).getLabel();
         }
         
         ArrayList<Node> leaves = getLeaves(adt);
