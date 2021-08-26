@@ -19,6 +19,8 @@ package cypis;
 import cypis.modelAPI.ADTool.Node;
 import cypis.modelAPI.ADTool.Operator;
 import cypis.modelAPI.ADTool.NodeType;
+import cypis.modelAPI.Strategy.Strategy;
+import cypis.modelAPI.Strategy.StrategyParser;
 import cypis.modelAPI.Strategy.TemplateReductor;
 import cypis.modelAPI.UPPAAL.Edge;
 import cypis.modelAPI.UPPAAL.Label;
@@ -40,7 +42,6 @@ public class Cypis {
     
     private String modelFile = "";
     private String treeFile = "";
-    private String agentName = "";
     private String outFile = "cypisoutput.xml";
     /**
      * @param args the command line arguments
@@ -64,17 +65,16 @@ public class Cypis {
                 printHelp();
                 break;
             default:
-                if(args.length < 3){
+                if(args.length < 2){
                     System.out.println("Not enough arguments!");
                     printHelp();
                     return;
                 }
                 modelFile = args[0];
                 treeFile = args[1];
-                agentName = args[2];
                 
-                if(args.length > 3 && ("-o".equals(args[3]) || "--output".equals(args[3]))){
-                    if(args.length < 5){
+                if(args.length > 2 && ("-o".equals(args[2]) || "--output".equals(args[2]))){
+                    if(args.length < 4){
                         System.out.println("Not enough arguments!");
                         printHelp();
                         return;
@@ -93,14 +93,27 @@ public class Cypis {
         System.out.println("Loading Attack Tree");
         Node t = fl.loadTree(treeFile);
         
+        System.out.println("Processing Attack tree");
+        ArrayList<Strategy> s = new StrategyParser().parseStrategies(t);
         
-        System.out.println("Selecting Agent");
+        System.out.println("Number of Agents: "+s.size());
+        
+        System.out.println("Selecting "+s.get(0).getRelevantAgentName());
         ArrayList<Template> templates = (ArrayList<Template>) m.getTemplates().clone();//find required template
-        int templateIndex = templates.indexOf(new Template(agentName, null, null, null, null));
+        int templateIndex = templates.indexOf(new Template(s.get(0).getRelevantAgentName(), null, null, null, null));
         TemplateReductor tr = new TemplateReductor();
         
-        System.out.println("Reducing Agent");
-        templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), t));//reduce template, and replace the original
+        System.out.println("Reducing "+s.get(0).getRelevantAgentName());
+        templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s.get(0)));//reduce template, and replace the original
+        
+        if(s.size()>1){
+            System.out.println("Selecting "+s.get(0).getRelevantAgentName());
+            templateIndex = templates.indexOf(new Template(s.get(1).getRelevantAgentName(), null, null, null, null));
+
+            System.out.println("Reducing "+s.get(0).getRelevantAgentName());
+            templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s.get(0)));//reduce template, and replace the original
+        }
+        
         Model m2 = new Model(m);
         m2.setTemplates(templates);
         
@@ -122,98 +135,5 @@ public class Cypis {
                 "	options:\n" +
                 "		-h, --help              prints this message\n" +
                 "		-o, --output outfile	changes the output file's name");
-    }
-    
-    public static void createTestTree(){//creates a test Attack-Defense Tree
-        Node tree = new Node(Operator.OR, NodeType.NODE, "A<> NOT punished");//create root node
-        
-        tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in received_ballot_coerced do notify_authority"));//create and register first child node
-        
-        tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in received_fake_tracker do say_lie"));//create and register second child node
-    }
-    
-    public static Node createTestTree2(){//creates a test Attack-Defense Tree related to the test UPPAAL model
-        Node tree = new Node(Operator.OR, NodeType.NODE, "A<> a");//create root node
-        
-        tree.addChild(new Node(Operator.OR, NodeType.NODE, "when in start do go_a"));//create and register child node
-        
-        return tree;
-    }
-    
-    public static Model createTestModel(){//creates a test UPPAAL model
-        Model m = new Model();//create main model object
-        m.setDeclaration("// Place global declarations here.");
-        m.setSystemDeclaration(
-                "// Place template instantiations here.\n" +
-                "Process = Template();\n" +
-                "\n" +
-                "// List one or more processes to be composed into a system.\n" +
-                "system Process;");
-        
-        Template t = new Template();
-        t.setName("Template");
-        t.setDeclaration(
-                "//Actions START\n" +
-                "const bool go_a = true;\n" +
-                "const bool go_b = true;\n" +
-                "//Actions STOP");
-        
-        t.addState(new State( //add state "b"
-                new Label(88, 56, "b"), //name
-                null, //invariant
-                "", //comment
-                "id0", //id
-                false, //initial
-                false, //urgent
-                false, //committed
-                80, //x
-                80 //y
-        ));
-        
-        t.addState(new State( //add state "a"
-                new Label(-72, 56, "a"), //name
-                null, //invariant
-                "", //comment
-                "id1", //id
-                false, //initial
-                false, //urgent
-                false, //committed
-                -48, //x
-                80 //y
-        ));
-        
-        t.addState(new State( //add state "start"
-                new Label(0, -72, "start"), //name
-                null, //invariant
-                "", //comment
-                "id2", //id
-                true, //initial
-                false, //urgent
-                false, //committed
-                16, //x
-                -40 //y
-        ));
-        
-        t.addEdge(new Edge(
-                "id2", //source "start
-                "id0", //target "b"
-                null, //select
-                new Label(48, 0, "go_b"), //guard
-                null, //sync
-                null //update
-        ));
-        
-        t.addEdge(new Edge(
-                "id2", //source "start
-                "id1", //target "a"
-                null, //select
-                new Label(-48, 0, "go_a"), //guard
-                null, //sync
-                null //update
-        ));
-        
-        m.addTemplate(t);
-        
-        return m;
     }
 }
