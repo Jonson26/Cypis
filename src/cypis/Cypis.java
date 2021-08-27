@@ -127,7 +127,7 @@ public class Cypis {
     public void printHelp(){
         String cmd = System.getProperties().getProperty("sun.java.command");
         System.out.println(
-                "usage: java -jar cypis.jar (-h | --help | modelfile treefile agentname [options])\n" +
+                "usage: java -jar cypis.jar (-h | --help | modelfile treefile [options])\n" +
                 "	options:\n" +
                 "		-h, --help              prints this message\n" +
                 "		-o, --output outfile	changes the output file's name");
