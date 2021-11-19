@@ -33,11 +33,11 @@ import java.util.ArrayList;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Cypis {
-    private static final String VERSION = "1.1.1";//bump manually
+    private static final String VERSION = "1.2.0";//bump manually
     
-    private String modelFile = "";
-    private String treeFile = "";
-    private String outFile = "cypisoutput.xml";
+    private String settingsFile = "";
+    private Settings setting;
+    
     /**
      * @param args the command line arguments
      */
@@ -60,22 +60,23 @@ public class Cypis {
                 printHelp();
                 break;
             default:
-                if(args.length < 2){
-                    System.out.println("Not enough arguments!");
-                    printHelp();
-                    return;
-                }
-                modelFile = args[0];
-                treeFile = args[1];
-                
-                if(args.length > 2 && ("-o".equals(args[2]) || "--output".equals(args[2]))){
-                    if(args.length < 4){
-                        System.out.println("Not enough arguments!");
-                        printHelp();
-                        return;
-                    }
-                    outFile = args[3];
-                }
+                settingsFile = args[0];
+//                if(args.length < 2){
+//                    System.out.println("Not enough arguments!");
+//                    printHelp();
+//                    return;
+//                }
+//                modelFile = args[0];
+//                treeFile = args[1];
+//                
+//                if(args.length > 2 && ("-o".equals(args[2]) || "--output".equals(args[2]))){
+//                    if(args.length < 4){
+//                        System.out.println("Not enough arguments!");
+//                        printHelp();
+//                        return;
+//                    }
+//                    outFile = args[3];
+//                }
                 reduceModel();
                 break;
         }
@@ -83,10 +84,12 @@ public class Cypis {
     
     public void reduceModel(){
         EasyFileLoader fl = new EasyFileLoader();//load designated model files
+        System.out.println("Loading Project Settings");
+        setting = fl.loadSettings(settingsFile);
         System.out.println("Loading Model");
-        Model m = fl.loadModel(modelFile);
+        Model m = fl.loadModel(setting.getInputModelFileName());
         System.out.println("Loading Attack Tree");
-        Node t = fl.loadTree(treeFile);
+        Node t = fl.loadTree(setting.getInputTreeFileName());
         
         System.out.println("Processing Attack tree");
         ArrayList<Strategy> s = new StrategyParser().parseStrategies(t);
@@ -113,9 +116,9 @@ public class Cypis {
         Model m2 = new Model(m);
         m2.setTemplates(templates);
         
-        System.out.println("Writing Output to "+outFile);
+        System.out.println("Writing Output to "+setting.getSpecificOutputFileName(0));
         UPPAALWriter w = new UPPAALWriter();//write resulting model to file
-        File f = new File(outFile);
+        File f = new File(setting.getSpecificOutputFileName(0));
         try {
             w.writeModel(m2, f);
         } catch (IOException ex) {

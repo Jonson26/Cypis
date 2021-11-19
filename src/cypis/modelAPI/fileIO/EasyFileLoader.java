@@ -17,6 +17,7 @@
 package cypis.modelAPI.fileIO;
 
 import cypis.Cypis;
+import cypis.Settings;
 import cypis.modelAPI.ADTool.Node;
 import cypis.modelAPI.UPPAAL.Model;
 import java.io.IOException;
@@ -59,5 +60,19 @@ public class EasyFileLoader {
             Logger.getLogger(Cypis.class.getName()).log(Level.SEVERE, null, ex);
         }
         return n;
+    }
+    
+    public Settings loadSettings(String filename){
+        Settings s = null;
+        try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            SettingsHandler handler = new SettingsHandler();
+            saxParser.parse(filename, handler);
+            s = handler.getSettings();
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            Logger.getLogger(Cypis.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
     }
 }
