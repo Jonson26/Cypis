@@ -50,6 +50,12 @@ public class Node {
         children.add(c);
     }
     
+    public void removeChild(int index){
+        if(children.size()>index){
+            children.remove(0);
+        }
+    }
+    
     //below are all the getsetters
     public NodeType getType() {
         return type;
