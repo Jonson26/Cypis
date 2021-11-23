@@ -25,12 +25,23 @@ import java.util.ArrayList;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class StrategyParser {
+    public Strategy parseStrategy(ArrayList<String> leaves, String name){
+        ArrayList<PartialStrategy> strategy = new ArrayList<>();
+        
+        for(int i=0; leaves.size()>i; i++){
+            String leaf = leaves.get(i);
+            strategy.add(new PartialStrategy(leaf));
+        }
+        
+        return new Strategy(name, strategy);
+    }
+    
     public ArrayList<Strategy> parseStrategies(Node adt){
-//        String name1 = adt.getLabel();
-//        String name2 = null;
-//        if(adt.getChildren().size()>1){
-//            name2 = adt.getChildren().get(1).getLabel();
-//        }
+        String name1 = adt.getLabel();
+        String name2 = null;
+        if(adt.getChildren().size()>1){
+            name2 = adt.getChildren().get(1).getLabel();
+        }
         
         ArrayList<Node> leaves = getLeaves(adt);
         
