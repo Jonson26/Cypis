@@ -17,6 +17,8 @@
 package cypis;
 
 import cypis.modelAPI.ADTool.Node;
+import cypis.modelAPI.ADTool.NodeType;
+import cypis.modelAPI.Strategy.Expression;
 import cypis.modelAPI.Strategy.Strategy;
 import cypis.modelAPI.Strategy.StrategyParser;
 import cypis.modelAPI.Strategy.TemplateReductor;
@@ -91,48 +93,135 @@ public class Cypis {
         System.out.println("Loading Attack Tree");
         Node t = fl.loadTree(setting.getInputTreeFileName());
         
-        System.out.println("Processing Attack tree");
-        ArrayList<Strategy> s = new StrategyParser().parseStrategies(t);
-        
-        System.out.println("Number of Agents: "+s.size());
-        
-        System.out.println("Selecting "+s.get(0).getRelevantAgentName());
-        ArrayList<Template> templates = (ArrayList<Template>) m.getTemplates().clone();//find required template
-        int templateIndex = templates.indexOf(new Template(s.get(0).getRelevantAgentName(), null, null, null, null));
-        TemplateReductor tr = new TemplateReductor();
-        
-        System.out.println("Reducing "+s.get(0).getRelevantAgentName());
-        templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s.get(0)));//reduce template, and replace the original
-        
-        if(s.size()>1){
-            tr = new TemplateReductor();
-            System.out.println("Selecting "+s.get(1).getRelevantAgentName());
-            templateIndex = templates.indexOf(new Template(s.get(1).getRelevantAgentName(), null, null, null, null));
+        if(setting.getDefenderAgentExists()){
+            System.out.println("Two-Agent Strategy Definition Found");
+            System.out.println("Separating Out Attack And Defense Strategy Definitions");
+            Node attacker = t.clone();
+            int i = 0;
+            while(i>0){
+                i = attacker.prune(NodeType.COUNTERMEASURE);
+            }
+            Node defender = t.clone();
+            i = 0;
+            while(i>0){
+                i = defender.prune(NodeType.COUNTERMEASURE);
+            }
+            
+            System.out.println("Converting Strategy Definitions To Logical Formulas");
+            Expression attExp = new Expression(attacker);
+            Expression defExp = new Expression(defender);
+            
+            System.out.println("Creating EDNF Representation");
+            ArrayList<ArrayList<String>> attEDNF = attExp.bulidEDNF();
+            ArrayList<ArrayList<String>> defEDNF = defExp.bulidEDNF();
+            
+            System.out.println("Converting EDNF Representations Into Strategies");
+            ArrayList<Strategy> attStrat = new ArrayList<>();
+            ArrayList<Strategy> defStrat = new ArrayList<>();
+            
+            StrategyParser p = new StrategyParser();
+            
+            for(ArrayList<String> l: attEDNF){
+                attStrat.add(p.parseStrategies(l, setting.getAttackerAgentName()));
+            }
+            for(ArrayList<String> l: defEDNF){
+                defStrat.add(p.parseStrategies(l, setting.getDefenderAgentName()));
+            }
+            
+            System.out.println("Generating Cross Product Of The Two Strategy Sets");
+            ArrayList<ArrayList<Strategy>> strats = new ArrayList<>();
+            for(Strategy as: attStrat){
+                for(Strategy ds: defStrat){
+                    ArrayList<Strategy> element = new ArrayList<>();
+                    element.add(as);
+                    element.add(ds);
+                    strats.add(element);
+                }
+            }
+            
+            for(i=0; i<strats.size(); i++){
+                System.out.println("Processing Possible Strategy Tuple #"+i);
+                ArrayList<Strategy> s = strats.get(i);
 
-            System.out.println("Reducing "+s.get(1).getRelevantAgentName());
-            templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s.get(1)));//reduce template, and replace the original
+                System.out.println("Selecting "+s.get(0).getRelevantAgentName());
+                ArrayList<Template> templates = (ArrayList<Template>) m.getTemplates().clone();//find required template
+                int templateIndex = templates.indexOf(new Template(s.get(0).getRelevantAgentName(), null, null, null, null));
+                TemplateReductor tr = new TemplateReductor();
+
+                System.out.println("Reducing "+s.get(0).getRelevantAgentName());
+                templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s.get(0)));//reduce template, and replace the original
+
+                if(s.size()>1){
+                    tr = new TemplateReductor();
+                    System.out.println("Selecting "+s.get(1).getRelevantAgentName());
+                    templateIndex = templates.indexOf(new Template(s.get(1).getRelevantAgentName(), null, null, null, null));
+
+                    System.out.println("Reducing "+s.get(1).getRelevantAgentName());
+                    templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s.get(1)));//reduce template, and replace the original
+                }
+
+                Model m2 = new Model(m);
+                m2.setTemplates(templates);
+
+                System.out.println("Writing Output to "+setting.getSpecificOutputFileName(i));
+                UPPAALWriter w = new UPPAALWriter();//write resulting model to file
+                File f = new File(setting.getSpecificOutputFileName(i));
+                try {
+                    w.writeModel(m2, f);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }else{
+            System.out.println("Single-Agent Strategy Definition Found");
+            Node attacker = t.clone();
+            
+            System.out.println("Converting Strategy Definition To Logical Formulas");
+            Expression attExp = new Expression(attacker);
+            
+            System.out.println("Creating EDNF Representation");
+            ArrayList<ArrayList<String>> attEDNF = attExp.bulidEDNF();
+            
+            System.out.println("Converting EDNF Representations Into Strategies");
+            ArrayList<Strategy> attStrat = new ArrayList<>();
+            
+            StrategyParser p = new StrategyParser();
+            
+            for(ArrayList<String> l: attEDNF){
+                attStrat.add(p.parseStrategies(l, setting.getAttackerAgentName()));
+            }
+            
+            for(int i=0; i<attStrat.size(); i++){
+                System.out.println("Processing Possible Strategy Tuple #"+i);
+                Strategy s = attStrat.get(i);
+
+                System.out.println("Selecting "+s.getRelevantAgentName());
+                ArrayList<Template> templates = (ArrayList<Template>) m.getTemplates().clone();//find required template
+                int templateIndex = templates.indexOf(new Template(s.getRelevantAgentName(), null, null, null, null));
+                TemplateReductor tr = new TemplateReductor();
+
+                System.out.println("Reducing "+s.getRelevantAgentName());
+                templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s));//reduce template, and replace the original
+
+                Model m2 = new Model(m);
+                m2.setTemplates(templates);
+
+                System.out.println("Writing Output to "+setting.getSpecificOutputFileName(i));
+                UPPAALWriter w = new UPPAALWriter();//write resulting model to file
+                File f = new File(setting.getSpecificOutputFileName(i));
+                try {
+                    w.writeModel(m2, f);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
         
-        Model m2 = new Model(m);
-        m2.setTemplates(templates);
-        
-        System.out.println("Writing Output to "+setting.getSpecificOutputFileName(0));
-        UPPAALWriter w = new UPPAALWriter();//write resulting model to file
-        File f = new File(setting.getSpecificOutputFileName(0));
-        try {
-            w.writeModel(m2, f);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
         System.out.println("Finished!");
     }
     
     public void printHelp(){
         String cmd = System.getProperties().getProperty("sun.java.command");
-        System.out.println(
-                "usage: java -jar cypis.jar (-h | --help | modelfile treefile [options])\n" +
-                "	options:\n" +
-                "		-h, --help              prints this message\n" +
-                "		-o, --output outfile	changes the output file's name");
+        System.out.println("usage: java -jar cypis.jar (-h | --help | settingsfile)";
     }
 }
