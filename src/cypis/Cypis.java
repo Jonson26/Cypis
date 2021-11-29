@@ -222,6 +222,6 @@ public class Cypis {
     
     public void printHelp(){
         String cmd = System.getProperties().getProperty("sun.java.command");
-        System.out.println("usage: java -jar cypis.jar (-h | --help | settingsfile)";
+        System.out.println("usage: java -jar cypis.jar (-h | --help | settingsfile)");
     }
 }
