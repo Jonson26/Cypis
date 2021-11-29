@@ -25,12 +25,12 @@ import java.util.ArrayList;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class StrategyParser {
-    public Strategy parseStrategy(ArrayList<String> leaves, String name){
+    
+    public Strategy parseStrategies(ArrayList<String> list, String name){
         ArrayList<PartialStrategy> strategy = new ArrayList<>();
         
-        for(int i=0; leaves.size()>i; i++){
-            String leaf = leaves.get(i);
-            strategy.add(new PartialStrategy(leaf));
+        for(String s: list){
+            strategy.add(new PartialStrategy(s));
         }
         
         return new Strategy(name, strategy);
