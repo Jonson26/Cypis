@@ -67,7 +67,8 @@ public class SettingsHandler  extends DefaultHandler{
                 elementValue = new StringBuilder();
                 break;
             case DEFENDERAGENT:
-                dae = Boolean.getBoolean(attr.getValue("exists"));
+                String v = attr.getValue("exists");
+                dae = ("true".equals(v)||"True".equals(v)||"TRUE".equals(v));
                 elementValue = new StringBuilder();
                 break;
             case WILDCARD:
