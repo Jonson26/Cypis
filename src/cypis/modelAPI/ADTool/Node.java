@@ -96,4 +96,31 @@ public class Node {
     public void setCountermeasure(Node countermeasure) {
         this.countermeasure = countermeasure;
     }
+    
+    public Node clone(){
+        ArrayList<Node> childCopies = new ArrayList<>();
+        for(Node child: children){
+            childCopies.add(child.clone());
+        }
+        Node o = new Node(operator, type, label);
+        o.setChildren(childCopies);
+        return o;
+    }
+    
+    public int prune(NodeType n){
+        if(children.size()>0){
+            int i = 0;
+            for (Node child : children) {
+                if(child.getChildren().isEmpty() && child.getType()==n){
+                    children.remove(child);
+                    return 1;
+                }else{
+                    i+= child.prune(n);
+                }
+            }
+            return i;
+        }else{
+            return 0;
+        }
+    }
 }
