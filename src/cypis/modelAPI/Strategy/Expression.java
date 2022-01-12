@@ -17,7 +17,6 @@
 package cypis.modelAPI.Strategy;
 
 import cypis.modelAPI.ADTool.Node;
-import cypis.modelAPI.ADTool.NodeType;
 import cypis.modelAPI.ADTool.Operator;
 import java.util.ArrayList;
 
@@ -67,7 +66,8 @@ public class Expression {
                 this.operator = ExpressionType.OR;
             }
             this.a = new Expression(n.getChildren().get(0));
-            Node temp = new Node(n.getOperator(), n.getType(), n.getLabel());//In case there's more than 2 children in n
+            Node temp = n.clone();//In case there's more than 2 children in n
+            
             temp.removeChild(0);
             this.b = new Expression(temp);
         }
