@@ -94,7 +94,7 @@ public class Cypis {
             Node defender = t.clone();
             i = 0;
             while(i>0){
-                i = defender.prune(NodeType.COUNTERMEASURE);
+                i = defender.prune(NodeType.NODE);
             }
             
             System.out.println("Converting Strategy Definitions To Logical Formulas");
@@ -146,7 +146,8 @@ public class Cypis {
                 TemplateReductor tr = new TemplateReductor();
 
                 System.out.println("Reducing "+s.get(0).getRelevantAgentName());
-                templates.set(templateIndex, tr.reduce(m.getTemplates().get(templateIndex), s.get(0)));//reduce template, and replace the original
+                Template template = tr.reduce(m.getTemplates().get(templateIndex), s.get(0));
+                templates.set(templateIndex, template);//reduce template, and replace the original
 
                 if(s.size()>1){
                     tr = new TemplateReductor();
