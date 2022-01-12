@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Cypis {
-    private static final String VERSION = "2.1.0";//bump manually
+    private static final String VERSION = "2.1.1";//bump manually
     
     private String settingsFile = "";
     private Settings setting;
@@ -86,13 +86,13 @@ public class Cypis {
             
             //separate the attacker tree and the defender tree into two different entities
             Node attacker = t.clone();
-            int i = 0;
+            int i = 1;
             while(i>0){
                 i = attacker.prune(NodeType.COUNTERMEASURE);
             }
             
             Node defender = t.clone();
-            i = 0;
+            i = 1;
             while(i>0){
                 i = defender.prune(NodeType.NODE);
             }
