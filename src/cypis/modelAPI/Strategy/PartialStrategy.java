@@ -23,9 +23,23 @@ package cypis.modelAPI.Strategy;
 public class PartialStrategy {
     private String state, action;
     private boolean valid;
-
+    
+    /**
+    * Functionality moved to StrategyParser due to need for more complex partial
+    * strategy description, without altering the basic properties of how the 
+    * PartialStrategy class operates.
+    *
+    * @deprecated use {@link #PartialStrategy(String state, String action, boolean valid)} instead.  
+    */
+    @Deprecated
     public PartialStrategy(String requirement) {
         parsePartialStrategyDefinitionString(requirement);
+    }
+
+    public PartialStrategy(String state, String action, boolean valid) {
+        this.state = state;
+        this.action = action;
+        this.valid = valid;
     }
 
     public String getState() {
@@ -54,7 +68,7 @@ public class PartialStrategy {
             return;
         }
         String[] parts = s.split(" do ");
-        action = parts[1].replaceAll("\\s+","");
+        action = parts[1].replaceAll("\\s+","");//delete all whitespace
         state = parts[0].replaceAll("\\s+","");
         valid = true;
     }

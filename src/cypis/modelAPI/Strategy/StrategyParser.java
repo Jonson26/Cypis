@@ -19,6 +19,7 @@ package cypis.modelAPI.Strategy;
 import cypis.modelAPI.ADTool.Node;
 import cypis.modelAPI.ADTool.NodeType;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -28,9 +29,41 @@ public class StrategyParser {
     
     public Strategy parseStrategies(ArrayList<String> list, String name){
         ArrayList<PartialStrategy> strategy = new ArrayList<>();
+        HashMap<String, String[]> locations = new HashMap<>();
         
         for(String s: list){
-            strategy.add(new PartialStrategy(s));
+            TemporaryPartialStrategy t = parsePartialStrategyDefinitionString(s);
+            if(t.valid){
+                String[] locs = t.action.split(",");
+                String[] act = t.state.split(",");
+
+                for(String l: locs){
+                    if(locations.containsKey(l)){
+                        String[] actt = locations.get(l);
+                        String[] actt2 = {};
+                        for(String st: act){
+                            if(contains(st, actt)){
+                                int i = actt2.length;
+                                actt2[i] = st;
+                            }
+                        }
+                        locations.put(l, act);
+                    }else{
+                        locations.put(l, act);
+                    }
+                }
+            }
+        }
+        
+        for(String key: locations.keySet()){
+            String[] l = locations.get(key);
+            if(l.length==0){
+                strategy.add(new PartialStrategy(key, null, true));// null action partial strategy found
+                System.out.println("Warning, null action partial strategy found. Please check if your attack-defense tree does not contain an internally contradictive set of partial strategies for location "+key+"!");
+            }
+            for(String e: l){
+                strategy.add(new PartialStrategy(key, e, true));
+            }
         }
         
         return new Strategy(name, strategy);
@@ -81,5 +114,43 @@ public class StrategyParser {
         }
         
         return leaves;
+    }
+    
+    private TemporaryPartialStrategy parsePartialStrategyDefinitionString(String s){
+        if(s.length()<7){
+            return new TemporaryPartialStrategy(null, null, false);
+        }
+        String t = s.substring(0, 7);
+        if (t.equals("when in")){
+            s = s.substring(7);
+        }else{
+            return new TemporaryPartialStrategy(null, null, false);
+        }
+        String[] parts = s.split(" do ");
+        return new TemporaryPartialStrategy(parts[1].replaceAll("\\s+",""),
+                                            parts[0].replaceAll("\\s+",""),
+                                            true);
+    }
+    
+    private Boolean contains(String s, String[] t){
+        for(String st: t){
+            if(s.equals(st)) return true;
+        }
+        return false;
+    }
+    
+    private class TemporaryPartialStrategy{
+        String action, state;
+        Boolean valid;
+
+        public TemporaryPartialStrategy(String action, String state, Boolean valid) {
+            this.action = action;
+            this.state = state;
+            this.valid = valid;
+        }
+        
+        public PartialStrategy ConvertToFullPartialStrategy(){
+            return new PartialStrategy(action, state, valid);
+        }
     }
 }
