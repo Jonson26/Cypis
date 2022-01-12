@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Cypis {
-    private static final String VERSION = "2.0.0";//bump manually
+    private static final String VERSION = "2.1.0";//bump manually
     
     private String settingsFile = "";
     private Settings setting;
@@ -63,44 +63,34 @@ public class Cypis {
                 break;
             default:
                 settingsFile = args[0];
-//                if(args.length < 2){
-//                    System.out.println("Not enough arguments!");
-//                    printHelp();
-//                    return;
-//                }
-//                modelFile = args[0];
-//                treeFile = args[1];
-//                
-//                if(args.length > 2 && ("-o".equals(args[2]) || "--output".equals(args[2]))){
-//                    if(args.length < 4){
-//                        System.out.println("Not enough arguments!");
-//                        printHelp();
-//                        return;
-//                    }
-//                    outFile = args[3];
-//                }
                 reduceModel();
                 break;
         }
     }
     
     public void reduceModel(){
-        EasyFileLoader fl = new EasyFileLoader();//load designated model files
+        EasyFileLoader fl = new EasyFileLoader();//create loader for designated model files
+        
         System.out.println("Loading Project Settings");
-        setting = fl.loadSettings(settingsFile);
+        setting = fl.loadSettings(settingsFile);//load settings file
+        
         System.out.println("Loading Model");
-        Model m = fl.loadModel(setting.getInputModelFileName());
+        Model m = fl.loadModel(setting.getInputModelFileName());//load UPPAAL model file
+        
         System.out.println("Loading Attack Tree");
-        Node t = fl.loadTree(setting.getInputTreeFileName());
+        Node t = fl.loadTree(setting.getInputTreeFileName());//load ADTool XML export file
         
         if(setting.getDefenderAgentExists()){
             System.out.println("Two-Agent Strategy Definition Found");
             System.out.println("Separating Out Attack And Defense Strategy Definitions");
+            
+            //separate the attacker tree and the defender tree into two different entities
             Node attacker = t.clone();
             int i = 0;
             while(i>0){
                 i = attacker.prune(NodeType.COUNTERMEASURE);
             }
+            
             Node defender = t.clone();
             i = 0;
             while(i>0){
@@ -119,13 +109,20 @@ public class Cypis {
             ArrayList<Strategy> attStrat = new ArrayList<>();
             ArrayList<Strategy> defStrat = new ArrayList<>();
             
-            StrategyParser p = new StrategyParser();
             
+            //parse each element of generated EDNF into a Strategy object
+            StrategyParser p = new StrategyParser();
             for(ArrayList<String> l: attEDNF){
                 attStrat.add(p.parseStrategies(l, setting.getAttackerAgentName()));
             }
             for(ArrayList<String> l: defEDNF){
                 defStrat.add(p.parseStrategies(l, setting.getDefenderAgentName()));
+            }
+            
+            //If no defender strategy is defined in the tree, despite the defender being required by the settings file, add an empty Strategy into the defender strategy table.
+            if(defStrat.isEmpty()){
+                System.out.println("No defender strategies defined. Adding empty strategy.");
+                defStrat.add(new Strategy(setting.getDefenderAgentName(), new ArrayList<>()));
             }
             
             System.out.println("Generating Cross Product Of The Two Strategy Sets");
