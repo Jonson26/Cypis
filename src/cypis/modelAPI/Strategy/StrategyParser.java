@@ -127,8 +127,8 @@ public class StrategyParser {
             return new TemporaryPartialStrategy(null, null, false);
         }
         String[] parts = s.split(" do ");
-        return new TemporaryPartialStrategy(parts[1].replaceAll("\\s+",""),
-                                            parts[0].replaceAll("\\s+",""),
+        return new TemporaryPartialStrategy(parts[0].replaceAll("\\s+",""),
+                                            parts[1].replaceAll("\\s+",""),
                                             true);
     }
     
