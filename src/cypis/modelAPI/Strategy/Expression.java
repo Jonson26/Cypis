@@ -107,13 +107,12 @@ public class Expression {
                 bL = b.bulidEDNF();
                 aL.forEach(ae -> {
                     bL.forEach(be -> {
-                        ae.addAll(be);
-                        o.add(ae);
+                        ArrayList<String> aec = (ArrayList<String>) ae.clone();
+                        aec.addAll(be);
+                        o.add(aec);
                     });
                 });
                 return o;
-
-
         }
         return o;
     }
