@@ -123,4 +123,25 @@ public class Node {
             return 0;
         }
     }
+    
+    public String generateStringRepresentation(){
+        String o = label+"(";
+        switch(type){
+            case NODE:
+                o+="N)";
+                break;
+            case COUNTERMEASURE:
+                o+="C)";
+                break;
+        }
+        if(!children.isEmpty()){
+            o+=":{\n";
+            for(Node child: children){
+                o+=child.generateStringRepresentation();
+                o+=",\n";
+            }
+            o+="}";
+        }
+        return o;
+    }
 }
