@@ -36,11 +36,12 @@ public class EasyFileLoader {
     public Model loadModel(String filename){
         Model m = null;
         try {
-            new TempXMLFilemaker().adaptUPPAALFile(filename);
+            TempXMLFilemaker t = new TempXMLFilemaker();
+            String tf = t.adaptUPPAALFile(filename);
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             UPPAALHandler handler = new UPPAALHandler();
-            saxParser.parse("cypistemp.xml", handler);
+            saxParser.parse(tf, handler);
             m = handler.getModel();
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(Cypis.class.getName()).log(Level.SEVERE, null, ex);

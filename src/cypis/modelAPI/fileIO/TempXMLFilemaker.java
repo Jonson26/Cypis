@@ -18,6 +18,7 @@ package cypis.modelAPI.fileIO;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -29,11 +30,14 @@ import java.io.IOException;
  */
 public class TempXMLFilemaker {
     
-    public void adaptUPPAALFile(String filename) throws FileNotFoundException, IOException{
+    public String adaptUPPAALFile(String filename) throws FileNotFoundException, IOException{
         FileReader fr = new FileReader(filename);
         BufferedReader br = new BufferedReader(fr);
         
-        FileWriter fw = new FileWriter("cypistemp.xml");
+        File tempFile = File.createTempFile("Cypis-", ".xml");
+        tempFile.deleteOnExit();
+        
+        FileWriter fw = new FileWriter(tempFile);
         BufferedWriter bw = new BufferedWriter(fw);
         
         String s = br.readLine();
@@ -61,5 +65,7 @@ public class TempXMLFilemaker {
         fw.close();
         br.close();
         fr.close();
+        
+        return tempFile.getAbsolutePath();
     }
 }
