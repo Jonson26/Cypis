@@ -25,10 +25,10 @@ import java.util.Objects;
  */
 public class Template {
     private String name, parameter, declaration;
-    private ArrayList<State> states;
+    private ArrayList<Location> states;
     private ArrayList<Edge> edges;
 
-    public Template(String name, String parameter, String declaration, ArrayList<State> states, ArrayList<Edge> edges) {
+    public Template(String name, String parameter, String declaration, ArrayList<Location> states, ArrayList<Edge> edges) {
         this.name = name;
         this.parameter = parameter;
         this.declaration = declaration;
@@ -52,11 +52,11 @@ public class Template {
         this.declaration = declaration;
     }
 
-    public ArrayList<State> getStates() {
+    public ArrayList<Location> getStates() {
         return states;
     }
 
-    public void setStates(ArrayList<State> states) {
+    public void setStates(ArrayList<Location> states) {
         this.states = states;
     }
 
@@ -68,15 +68,15 @@ public class Template {
         this.edges = edges;
     }
     
-    public void addState(State s){
+    public void addState(Location s){
         states.add(s);
     }
     
-    public State getState(int i){
+    public Location getState(int i){
         return states.get(i);
     }
     
-    public State getState(String id){
+    public Location getState(String id){
         return states.get(findStateById(id));
     }
     
@@ -112,7 +112,7 @@ public class Template {
 //            return -1;
 //        }
 //        return i;
-        return states.indexOf(new State(null, id, 0, 0));
+        return states.indexOf(new Location(null, id, 0, 0));
     }
     
     public int findStateByName(String name){//returns -1 if element cannot be found; only returns first instance found

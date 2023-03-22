@@ -20,7 +20,7 @@ import cypis.modelAPI.UPPAAL.Edge;
 import cypis.modelAPI.UPPAAL.Label;
 import cypis.modelAPI.UPPAAL.Model;
 import cypis.modelAPI.UPPAAL.Nail;
-import cypis.modelAPI.UPPAAL.State;
+import cypis.modelAPI.UPPAAL.Location;
 import cypis.modelAPI.UPPAAL.Template;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -53,7 +53,7 @@ public class UPPAALHandler extends DefaultHandler{
     private StringBuilder elementValue;
     
     private Template template;
-    private State state;
+    private Location state;
     private Edge edge;
     private Label name, label;
 
@@ -95,7 +95,7 @@ public class UPPAALHandler extends DefaultHandler{
                 break;
             case LOCATION:
                 mode = "state";
-                state = new State(null, attr.getValue("id"), Integer.parseInt(attr.getValue("x")), Integer.parseInt(attr.getValue("y")));
+                state = new Location(null, attr.getValue("id"), Integer.parseInt(attr.getValue("x")), Integer.parseInt(attr.getValue("y")));
                 break;
             case INIT:
                 String initId = attr.getValue("ref");

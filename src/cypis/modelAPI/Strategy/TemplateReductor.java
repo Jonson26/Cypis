@@ -17,7 +17,7 @@
 package cypis.modelAPI.Strategy;
 
 import cypis.modelAPI.UPPAAL.Edge;
-import cypis.modelAPI.UPPAAL.State;
+import cypis.modelAPI.UPPAAL.Location;
 import cypis.modelAPI.UPPAAL.Template;
 import java.util.ArrayList;
 
@@ -149,12 +149,12 @@ public class TemplateReductor {
     }
     
     private boolean removeOrphanedStates(){
-        ArrayList<State> states = new ArrayList<>();
+        ArrayList<Location> states = new ArrayList<>();
         ArrayList<Edge> edges = template.getEdges();
         boolean changed = false;
         
         for(int i=0; i<template.getStates().size(); i++){
-            State s = template.getStates().get(i);
+            Location s = template.getStates().get(i);
             if(s.isInitial()){//if state is initial, don't remove
                     states.add(s);
                     continue;

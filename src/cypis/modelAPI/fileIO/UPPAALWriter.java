@@ -19,7 +19,7 @@ package cypis.modelAPI.fileIO;
 import cypis.modelAPI.UPPAAL.Edge;
 import cypis.modelAPI.UPPAAL.Label;
 import cypis.modelAPI.UPPAAL.Model;
-import cypis.modelAPI.UPPAAL.State;
+import cypis.modelAPI.UPPAAL.Location;
 import cypis.modelAPI.UPPAAL.Template;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -89,7 +89,7 @@ public class UPPAALWriter {
         return buffer;
     }
     
-    private String composeState(State s){
+    private String composeState(Location s){
         String buffer = "";
         
         if(s.isInitial()){
