@@ -29,13 +29,15 @@ import cypis.modelAPI.fileIO.UPPAALWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Cypis {
-    private static final String VERSION = "2.1.2";//bump manually
+    private static final String VERSION = "2.2.0";//bump manually
     
     private String settingsFile = "";
     private Settings setting;
@@ -44,13 +46,17 @@ public class Cypis {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Cypis Model Reductor version " + VERSION);
-        System.out.println("(c) 2021 Filip Jamroga");
-        Cypis c = new Cypis();
-        c.processArgs(args);
+        try {
+            System.out.println("Cypis Model Reductor version " + VERSION);
+            System.out.println("(c) 2021-2023 Filip Jamroga");
+            Cypis c = new Cypis();
+            c.processArgs(args);
+        } catch (Exception ex) {
+            Logger.getLogger(Cypis.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void processArgs(String[] args){
+    public void processArgs(String[] args) throws Exception{
         if(args.length == 0){
             System.out.println("Not enough arguments!");
             printHelp();
@@ -68,7 +74,7 @@ public class Cypis {
         }
     }
     
-    public void reduceModel(){
+    public void reduceModel() throws Exception{
         EasyFileLoader fl = new EasyFileLoader();//create loader for designated model files
         
         System.out.println("Loading Project Settings");
