@@ -153,18 +153,16 @@ public class TemplateReductor {
         ArrayList<Edge> edges = template.getEdges();
         boolean changed = false;
         
-        for(int i=0; i<template.getLocations().size(); i++){
-            Location s = template.getLocations().get(i);
-            if(s.isInitial()){//if location is initial, don't remove
-                    locations.add(s);
-                    continue;
+        for(Location location : template.getLocations()){
+            if(location.isInitial()){//if location is initial, don't remove
+                locations.add(location);
+                continue;
             }
-            for(int j=0; j<edges.size(); j++){
-                if(template.findLocationById(edges.get(j).getTarget())==i){//if an edge leading to the location in question has been found, don't remove
-                    locations.add(s);
-                    break;//we only need to find one targeting edge to be sure that the location isn't orphaned
-                }else if(i+1==template.getLocations().size()){//if we're at the end of the list of edges, and we still haven't found a targeting edge, drop location
+            for(Edge edge : edges){
+                if(edge.getTarget().equals(location)){//if an edge leading to the location in question has been found, don't remove
+                    locations.add(location);
                     changed = true;
+                    break;
                 }
             }
         }
