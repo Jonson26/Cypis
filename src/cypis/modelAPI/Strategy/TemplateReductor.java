@@ -159,7 +159,7 @@ public class TemplateReductor {
                 continue;
             }
             for(Edge edge : edges){
-                if(edge.getTarget().equals(location)){//if an edge leading to the location in question has been found, don't remove
+                if(edge.getTarget().equals(location.getId())){//if an edge leading to the location in question has been found, don't remove
                     locations.add(location);
                     break;
                 }
