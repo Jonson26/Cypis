@@ -45,7 +45,7 @@ public class UPPAALWriter {
         buffer += "\n\n<nta>\n";
         
         //write the declaration
-        buffer += "<declaration>\n"+m.getDeclaration()+"\n</declaration>\n";
+        buffer += "<declaration>\n"+fixString(m.getDeclaration())+"\n</declaration>\n";
         
         //write all the templates
         for(int i=0; i<m.getTemplates().size(); i++){
@@ -53,7 +53,7 @@ public class UPPAALWriter {
         }
         
         //write system declaration
-        buffer += "<system>\n"+m.getSystemDeclaration()+"\n</system>\n";
+        buffer += "<system>\n"+fixString(m.getSystemDeclaration())+"\n</system>\n";
         //close nta tag
         buffer += "</nta>";
         
@@ -70,9 +70,9 @@ public class UPPAALWriter {
         
         buffer += "<template>\n";
         
-        buffer += "<name>"+t.getName()+"</name>\n";
-        buffer += "<parameter>"+t.getParameter()+"</parameter>\n";
-        buffer += "<declaration>\n"+t.getDeclaration()+"</declaration>\n";
+        buffer += "<name>"+fixString(t.getName())+"</name>\n";
+        buffer += "<parameter>"+fixString(t.getParameter())+"</parameter>\n";
+        buffer += "<declaration>\n"+fixString(t.getDeclaration())+"</declaration>\n";
         
         for(int i=0; i<t.getLocations().size(); i++){
             buffer += composeLocation(t.getLocations().get(i));
@@ -98,12 +98,12 @@ public class UPPAALWriter {
         
         buffer += "<location id=\""+location.getId()+"\" x=\""+location.getX()+"\" y=\""+location.getY()+"\">\n";
         try {
-            buffer += "<name x=\""+location.getName().getX()+"\" y=\""+location.getName().getY()+"\">"+location.getName().getContent()+"</name>\n";
+            buffer += "<name x=\""+location.getName().getX()+"\" y=\""+location.getName().getY()+"\">"+fixString(location.getName().getContent())+"</name>\n";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         if(location.getInvariant()!=null){
-            buffer += "<label kind=\"invariant\" x=\""+location.getInvariant().getX()+"\" y=\""+location.getInvariant().getY()+"\">"+location.getInvariant().getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>";
+            buffer += "<label kind=\"invariant\" x=\""+location.getInvariant().getX()+"\" y=\""+location.getInvariant().getY()+"\">"+fixString(location.getInvariant().getContent())+"</label>";
         }
         
         if(location.isCommitted()){
@@ -127,18 +127,18 @@ public class UPPAALWriter {
         
         if(e.getSelect()!=null){
             Label l = e.getSelect();
-            buffer += "<label kind=\"select\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
+            buffer += "<label kind=\"select\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+fixString(l.getContent())+"</label>\n";
         }
         if(e.getGuard()!=null){
             Label l = e.getGuard();
-            buffer += "<label kind=\"guard\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
+            buffer += "<label kind=\"guard\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+fixString(l.getContent())+"</label>\n";
         }if(e.getSync()!=null){
             Label l = e.getSync();
-            buffer += "<label kind=\"synchronisation\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
+            buffer += "<label kind=\"synchronisation\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+fixString(l.getContent())+"</label>\n";
         }
         if(e.getUpdate()!=null){
             Label l = e.getUpdate();
-            buffer += "<label kind=\"assignment\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+l.getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>\n";
+            buffer += "<label kind=\"assignment\" x=\""+l.getX()+"\" y=\""+l.getY()+"\">"+fixString(l.getContent())+"</label>\n";
         }
         
         for(int i=0; i<e.getNails().size(); i++){
@@ -148,5 +148,13 @@ public class UPPAALWriter {
         buffer += "</transition>\n";
         
         return buffer;
+    }
+    
+    private String fixString(String s){
+        s = s.replaceAll("<", "&lt;");
+        s = s.replaceAll(">", "&gt;");
+        s = s.replaceAll("&", "&amp;");
+        
+        return s;
     }
 }
