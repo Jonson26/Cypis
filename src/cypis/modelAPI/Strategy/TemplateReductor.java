@@ -161,11 +161,12 @@ public class TemplateReductor {
             for(Edge edge : edges){
                 if(edge.getTarget().equals(location)){//if an edge leading to the location in question has been found, don't remove
                     locations.add(location);
-                    changed = true;
                     break;
                 }
             }
         }
+        
+        changed = !(locations.size() == template.getLocations().size());
         
         template.setLocations(locations);
         
