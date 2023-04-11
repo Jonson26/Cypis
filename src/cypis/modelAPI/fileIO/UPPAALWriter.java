@@ -56,10 +56,8 @@ public class UPPAALWriter {
         buffer += "</nta>";
         
         //write buffer to file
-        FileWriter fr = null;
-        BufferedWriter br = null;
-        fr = new FileWriter(f);
-        br = new BufferedWriter(fr);
+        FileWriter fr = new FileWriter(f);
+        BufferedWriter br = new BufferedWriter(fr);
         br.write(buffer);
         br.close();
         fr.close();
@@ -74,8 +72,8 @@ public class UPPAALWriter {
         buffer += "<parameter>"+t.getParameter()+"</parameter>\n";
         buffer += "<declaration>\n"+t.getDeclaration()+"</declaration>\n";
         
-        for(int i=0; i<t.getStates().size(); i++){
-            buffer += composeState(t.getStates().get(i));
+        for(int i=0; i<t.getLocations().size(); i++){
+            buffer += composeLocation(t.getLocations().get(i));
         }
         
         buffer += "<init ref=\""+urgentID+"\"/>\n";
@@ -89,7 +87,7 @@ public class UPPAALWriter {
         return buffer;
     }
     
-    private String composeState(Location s){
+    private String composeLocation(Location s){
         String buffer = "";
         
         if(s.isInitial()){

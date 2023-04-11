@@ -53,7 +53,7 @@ public class UPPAALHandler extends DefaultHandler{
     private StringBuilder elementValue;
     
     private Template template;
-    private Location state;
+    private Location location;
     private Edge edge;
     private Label name, label;
 
@@ -95,11 +95,11 @@ public class UPPAALHandler extends DefaultHandler{
                 break;
             case LOCATION:
                 mode = "state";
-                state = new Location(null, attr.getValue("id"), Integer.parseInt(attr.getValue("x")), Integer.parseInt(attr.getValue("y")));
+                location = new Location(null, attr.getValue("id"), Integer.parseInt(attr.getValue("x")), Integer.parseInt(attr.getValue("y")));
                 break;
             case INIT:
                 String initId = attr.getValue("ref");
-                template.getState(initId).setInitial(true);
+                template.getLocation(initId).setInitial(true);
                 break;
             case TRANSITION:
                 edge = new Edge();
@@ -126,10 +126,10 @@ public class UPPAALHandler extends DefaultHandler{
                 elementValue = new StringBuilder();
                 break;
             case COMMITTED:
-                state.setCommitted(true);
+                location.setCommitted(true);
                 break;
             case URGENT:
-                state.setUrgent(true);
+                location.setUrgent(true);
                 break;
         }
     }
@@ -154,7 +154,7 @@ public class UPPAALHandler extends DefaultHandler{
                     template.setName(elementValue.toString());
                 }else if("state".equals(mode)){
                     name.setContent(elementValue.toString());
-                    state.setName(name);
+                    location.setName(name);
                 }
                 break;
             case PARAMETER:
@@ -162,7 +162,7 @@ public class UPPAALHandler extends DefaultHandler{
                 break;
             case LOCATION:
                 mode = "template";
-                template.addState(state);
+                template.addLocation(location);
                 break;
             case TRANSITION:
                 template.addEdge(edge);
@@ -183,7 +183,7 @@ public class UPPAALHandler extends DefaultHandler{
                         edge.setUpdate(label);
                         break;
                     case "invariant":
-                        state.setInvariant(label);
+                        location.setInvariant(label);
                         break;
                 }
                 break;

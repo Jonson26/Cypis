@@ -32,7 +32,7 @@ public class TemplateReductor {
     private ArrayList<PartialStrategy> strategy;
     private ArrayList<Action> actions;
     private ArrayList<EdgeDataContainer> actionEdgeIndex;
-    private ArrayList<String> relevantStateNames;
+    private ArrayList<String> relevantLocationNames;
     private ArrayList<Integer> redundantEdgeIndex;
 
     public TemplateReductor() {
@@ -52,13 +52,13 @@ public class TemplateReductor {
         actions = new ActionParser().parse(template.getDeclaration());//create a list of all actions defined in template
         
         checkEdges();//create a list of all action edges
-        checkStateRelevance();
+        checkLocationRelevance();
         checkEdgeRedundancy();//create a list of redundant edges
         removeRedundantEdges();
         
         boolean run = true;
         while(run){
-            run = removeOrphanedStates();
+            run = removeOrphanedLocations();
             boolean temp = removeOrphanedEdges();
             run = (run || temp);
         }
@@ -90,14 +90,14 @@ public class TemplateReductor {
         }
     }
     
-    private void checkStateRelevance(){
-        relevantStateNames = new ArrayList<>();
+    private void checkLocationRelevance(){
+        relevantLocationNames = new ArrayList<>();
         
         for (PartialStrategy s : strategy) {
-            String name = s.getState();
-            int i = template.findStateByName(name);
+            String name = s.getLocation();
+            int i = template.findLocationByName(name);
             if(i>=0){
-                relevantStateNames.add(template.getState(i).getName().getContent());
+                relevantLocationNames.add(template.getLocation(i).getName().getContent());
             }
         }
     }
@@ -109,15 +109,15 @@ public class TemplateReductor {
         });
         
         for(int i=0; i<actionEdgeIndex.size(); i++){
-            String s0 = template.getState(template.getEdge(actionEdgeIndex.get(i).index).getSource()).getName().getContent();
-            if(relevantStateNames.contains(s0)){
+            String s0 = template.getLocation(template.getEdge(actionEdgeIndex.get(i).index).getSource()).getName().getContent();
+            if(relevantLocationNames.contains(s0)){
                 for(int j=0; j<strategy.size(); j++){
                     if(strategy.get(j).isValid()){
                         String s1 = actionEdgeIndex.get(i).action.getName();
                         String s2 = strategy.get(j).getAction();
                         String s3 = template.getEdge(actionEdgeIndex.get(i).index).getSource();
-                        String s4 = strategy.get(j).getState();
-                        String s5 = template.getState(template.findStateByName(s4)).getId();
+                        String s4 = strategy.get(j).getLocation();
+                        String s5 = template.getLocation(template.findLocationByName(s4)).getId();
                         if(s1.equals(s2) && s3.equals(s5)){
                             rt.set(i, Boolean.TRUE);
                         }
@@ -148,28 +148,28 @@ public class TemplateReductor {
         template.setEdges(e);
     }
     
-    private boolean removeOrphanedStates(){
-        ArrayList<Location> states = new ArrayList<>();
+    private boolean removeOrphanedLocations(){
+        ArrayList<Location> locations = new ArrayList<>();
         ArrayList<Edge> edges = template.getEdges();
         boolean changed = false;
         
-        for(int i=0; i<template.getStates().size(); i++){
-            Location s = template.getStates().get(i);
-            if(s.isInitial()){//if state is initial, don't remove
-                    states.add(s);
+        for(int i=0; i<template.getLocations().size(); i++){
+            Location s = template.getLocations().get(i);
+            if(s.isInitial()){//if location is initial, don't remove
+                    locations.add(s);
                     continue;
             }
             for(int j=0; j<edges.size(); j++){
-                if(template.findStateById(edges.get(j).getTarget())==i){//if an edge leading to the state in question has been found, don't remove
-                    states.add(s);
-                    break;//we only need to find one targeting edge to be sure that the state isn't orphaned
-                }else if(i+1==template.getStates().size()){//if we're at the end of the list of edges, and we still haven't found a targeting edge, drop state
+                if(template.findLocationById(edges.get(j).getTarget())==i){//if an edge leading to the location in question has been found, don't remove
+                    locations.add(s);
+                    break;//we only need to find one targeting edge to be sure that the location isn't orphaned
+                }else if(i+1==template.getLocations().size()){//if we're at the end of the list of edges, and we still haven't found a targeting edge, drop location
                     changed = true;
                 }
             }
         }
         
-        template.setStates(states);
+        template.setLocations(locations);
         
         return changed;
     }
@@ -180,7 +180,7 @@ public class TemplateReductor {
         
         for(int i=0; i<template.getEdges().size(); i++){
             Edge s = template.getEdge(i);
-            if(template.findStateById(s.getSource())<0){//check if the current edge's source state exists
+            if(template.findLocationById(s.getSource())<0){//check if the current edge's source location exists
                 changed = true;//if not, drop
             }else{
                 edges.add(s);//if present, keep

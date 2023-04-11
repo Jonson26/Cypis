@@ -25,19 +25,19 @@ import java.util.Objects;
  */
 public class Template {
     private String name, parameter, declaration;
-    private ArrayList<Location> states;
+    private ArrayList<Location> locations;
     private ArrayList<Edge> edges;
 
-    public Template(String name, String parameter, String declaration, ArrayList<Location> states, ArrayList<Edge> edges) {
+    public Template(String name, String parameter, String declaration, ArrayList<Location> locations, ArrayList<Edge> edges) {
         this.name = name;
         this.parameter = parameter;
         this.declaration = declaration;
-        this.states = states;
+        this.locations = locations;
         this.edges = edges;
     }
     
     public Template(Template t){
-        this(t.getName(), t.getParameter(), t.getDeclaration(), t.getStates(), t.getEdges());
+        this(t.getName(), t.getParameter(), t.getDeclaration(), t.getLocations(), t.getEdges());
     }
 
     public Template() {
@@ -52,12 +52,12 @@ public class Template {
         this.declaration = declaration;
     }
 
-    public ArrayList<Location> getStates() {
-        return states;
+    public ArrayList<Location> getLocations() {
+        return locations;
     }
 
-    public void setStates(ArrayList<Location> states) {
-        this.states = states;
+    public void setLocations(ArrayList<Location> locations) {
+        this.locations = locations;
     }
 
     public ArrayList<Edge> getEdges() {
@@ -68,16 +68,16 @@ public class Template {
         this.edges = edges;
     }
     
-    public void addState(Location s){
-        states.add(s);
+    public void addLocation(Location s){
+        locations.add(s);
     }
     
-    public Location getState(int i){
-        return states.get(i);
+    public Location getLocation(int i){
+        return locations.get(i);
     }
     
-    public Location getState(String id){
-        return states.get(findStateById(id));
+    public Location getLocation(String id){
+        return locations.get(findLocationById(id));
     }
     
     public Edge getEdge(int i){
@@ -104,31 +104,17 @@ public class Template {
         this.parameter = parameter;
     }
     
-    public int findStateById(String id){//returns -1 if element cannot be found
-//        int i;
-//        for(i=0; !states.get(i).getId().equals(id) && states.size()!=i; i++){
-//        }
-//        if(states.size()==i){
-//            return -1;
-//        }
-//        return i;
-        return states.indexOf(new Location(null, id, 0, 0));
+    public int findLocationById(String id){//returns -1 if element cannot be found
+        return locations.indexOf(new Location(null, id, 0, 0));
     }
     
-    public int findStateByName(String name){//returns -1 if element cannot be found; only returns first instance found
-        for(int i=0; i<states.size(); i++){//State s : states) {
-            if(states.get(i).getName().getContent().equals(name)){//carnet.getCodeIsIn().equals(codeIsIn)) {
+    public int findLocationByName(String name){//returns -1 if element cannot be found; only returns first instance found
+        for(int i=0; i<locations.size(); i++){
+            if(locations.get(i).getName().getContent().equals(name)){
                     return i;
                 }
             }
         return -1;
-//        int i;
-//        for(i=0; !states.get(i).getName().getContent().equals(name) && states.size()!=i; i++){
-//        }
-//        if(states.size()==i){
-//            return -1;
-//        }
-//        return i;
     }
 
     @Override
