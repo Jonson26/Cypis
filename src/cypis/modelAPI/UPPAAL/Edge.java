@@ -37,7 +37,7 @@ public class Edge {
         this.nails = nails;
     }
     
-    public Edge(Location source, Location target, Label select, Label guard, Label sync, Label update, ArrayList<Nail> nails) {
+    public Edge(Location source, Location target, Label select, Label guard, Label sync, Label update, ArrayList<Nail> nails) throws Exception {
         this(source.getName().getContent(), target.getName().getContent(), select, guard, sync, update, nails);
     }
     
@@ -45,7 +45,7 @@ public class Edge {
         this(source, target, select, guard, sync, update, new ArrayList<>());
     }
     
-    public Edge(Location source, Location target, Label select, Label guard, Label sync, Label update) {
+    public Edge(Location source, Location target, Label select, Label guard, Label sync, Label update) throws Exception {
         this(source.getName().getContent(), target.getName().getContent(), select, guard, sync, update, new ArrayList<>());
     }
 

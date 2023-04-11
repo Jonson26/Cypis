@@ -44,7 +44,8 @@ public class Location {
         this(name, null, null, id, false, false, false, x, y);
     }
 
-    public Label getName() {
+    public Label getName() throws Exception{
+        if(name == null){throw new Exception("Location doesn't have a name!");}
         return name;
     }
 
@@ -129,6 +130,4 @@ public class Location {
         }
         return true;
     }
-    
-    
 }

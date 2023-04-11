@@ -42,7 +42,7 @@ public class TemplateReductor {
         redundantEdgeIndex = new ArrayList<>();
     }
     
-    public Template reduce(Template t, Strategy s){
+    public Template reduce(Template t, Strategy s) throws Exception{
         template = new Template(t);
 //        attackTree = n;
         
@@ -90,7 +90,7 @@ public class TemplateReductor {
         }
     }
     
-    private void checkLocationRelevance(){
+    private void checkLocationRelevance() throws Exception{
         relevantLocationNames = new ArrayList<>();
         
         for (PartialStrategy s : strategy) {
@@ -102,7 +102,7 @@ public class TemplateReductor {
         }
     }
     
-    private void checkEdgeRedundancy(){
+    private void checkEdgeRedundancy() throws Exception{
         ArrayList<Boolean> rt = new ArrayList();
         actionEdgeIndex.forEach(_item -> {
             rt.add(Boolean.FALSE);

@@ -18,6 +18,8 @@ package cypis.modelAPI.UPPAAL;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -110,10 +112,14 @@ public class Template {
     
     public int findLocationByName(String name){//returns -1 if element cannot be found; only returns first instance found
         for(int i=0; i<locations.size(); i++){
-            if(locations.get(i).getName().getContent().equals(name)){
+            try {
+                if(locations.get(i).getName().getContent().equals(name)){
                     return i;
                 }
+            } catch (Exception ex) {
+                return -1;
             }
+        }
         return -1;
     }
 

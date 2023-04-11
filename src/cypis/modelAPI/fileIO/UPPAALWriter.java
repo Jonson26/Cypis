@@ -25,6 +25,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -87,22 +89,26 @@ public class UPPAALWriter {
         return buffer;
     }
     
-    private String composeLocation(Location s){
+    private String composeLocation(Location location){
         String buffer = "";
         
-        if(s.isInitial()){
-            urgentID = s.getId();
+        if(location.isInitial()){
+            urgentID = location.getId();
         }
         
-        buffer += "<location id=\""+s.getId()+"\" x=\""+s.getX()+"\" y=\""+s.getY()+"\">\n";
-        buffer += "<name x=\""+s.getName().getX()+"\" y=\""+s.getName().getY()+"\">"+s.getName().getContent()+"</name>\n";
-        if(s.getInvariant()!=null){
-            buffer += "<label kind=\"invariant\" x=\""+s.getInvariant().getX()+"\" y=\""+s.getInvariant().getY()+"\">"+s.getInvariant().getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>";
+        buffer += "<location id=\""+location.getId()+"\" x=\""+location.getX()+"\" y=\""+location.getY()+"\">\n";
+        try {
+            buffer += "<name x=\""+location.getName().getX()+"\" y=\""+location.getName().getY()+"\">"+location.getName().getContent()+"</name>\n";
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        if(location.getInvariant()!=null){
+            buffer += "<label kind=\"invariant\" x=\""+location.getInvariant().getX()+"\" y=\""+location.getInvariant().getY()+"\">"+location.getInvariant().getContent().replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;")+"</label>";
         }
         
-        if(s.isCommitted()){
+        if(location.isCommitted()){
             buffer += "<committed/>\n";
-        }else if(s.isUrgent()){
+        }else if(location.isUrgent()){
             buffer += "<urgent/>\n";
         }
         
