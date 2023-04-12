@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  * @author Filip Jamroga (filip.jamroga.001 at student.uni.lu)
  */
 public class Cypis {
-    private static final String VERSION = "2.2.0";//bump manually
+    private static final String VERSION = "2.2.1";//bump manually
     
     private String settingsFile = "";
     private Settings setting;
