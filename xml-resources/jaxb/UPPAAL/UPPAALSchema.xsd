@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<!--
+Copyright (C) 2021 Filip Jamroga (filip.jamroga.001 at student.uni.lu)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+  <xs:element name="name">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:short" name="x" use="optional"/>
+          <xs:attribute type="xs:short" name="y" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="source">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:string" name="ref" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="target">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:string" name="ref" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="label">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:string" name="kind" use="optional"/>
+          <xs:attribute type="xs:short" name="x" use="optional"/>
+          <xs:attribute type="xs:short" name="y" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="nail">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:short" name="x" use="optional"/>
+          <xs:attribute type="xs:short" name="y" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parameter" type="xs:string"/>
+  <xs:element name="declaration" type="xs:string"/>
+  <xs:element name="location">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="committed" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute type="xs:string" name="id" use="optional"/>
+      <xs:attribute type="xs:short" name="x" use="optional"/>
+      <xs:attribute type="xs:short" name="y" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="init">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute type="xs:string" name="ref" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="transition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="source"/>
+        <xs:element ref="target"/>
+        <xs:element ref="label" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:element ref="nail" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="committed" type="xs:string"/>
+  <xs:element name="template">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="parameter" minOccurs="0"/>
+        <xs:element ref="declaration"/>
+        <xs:element ref="location" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:element ref="init"/>
+        <xs:element ref="transition" maxOccurs="unbounded" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="system" type="xs:string"/>
+  <xs:element name="nta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="declaration"/>
+        <xs:element ref="template" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:element ref="system"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

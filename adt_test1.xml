@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><adtree>
+  <node refinement="disjunctive">
+    <label>Goal r</label>
+    <node refinement="disjunctive">
+      <label>Optional Path r-1</label>
+    </node>
+    <node refinement="conjunctive">
+      <label>Optional Path r-2</label>
+      <node refinement="conjunctive">
+        <label>Requirement r-2.A</label>
+        <node refinement="disjunctive" switchRole="yes">
+          <label>Countermeasure r-2.A!</label>
+          <node refinement="disjunctive" switchRole="yes">
+            <label>Countermeasure r-2.A!!</label>
+          </node>
+        </node>
+      </node>
+      <node refinement="disjunctive">
+        <label>Requirement r-2.B</label>
+      </node>
+      <node refinement="disjunctive">
+        <label>Requirement r-2.C</label>
+      </node>
+      <node refinement="disjunctive" switchRole="yes">
+        <label>Countermeasure r-2!</label>
+        <node refinement="disjunctive">
+          <label>Optional Path r-2!.1</label>
+        </node>
+        <node refinement="disjunctive">
+          <label>Optional Path r-2!.2</label>
+        </node>
+      </node>
+    </node>
+  </node>
+</adtree>

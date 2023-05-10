@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
 	<modelfile>selene_v7.xml</modelfile>
-	<treefile>Double_Barrel_Voter_vs_Coercer_alt_SWAP.xml</treefile>
+	<treefile>Double_Barrel_Voter_vs_Coercer_alt_SWAP_nodefblock.xml</treefile>
 
-	<attackeragent>Coercer </attackeragent>
+	<attackeragent>Coercer</attackeragent>
 	<defenderagent exists="true">Voter</defenderagent>
 
 	<wildcard>#</wildcard>
