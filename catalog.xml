@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="file:/C:/Users/User/Documents/NetBeansProjects/Cypis/src/cypis/modelAPI/fileIO/UPPAALSchema.xsd" uri="xml-resources/jaxb/UPPAAL/UPPAALSchema.xsd"/>
-</catalog>
